@@ -8,4 +8,15 @@
 	<string name="search_hint">Enter product or brand name</string>
 	<string name="title_deal_of_the_day">Deal of the day</string>
 	<string name="new_arrivals">New Arrivals</string>
+	<string name="category_title">Categories</string>
+	<string name="category_lifestyle">Lifestyle</string>
+	<string name="beauty_and_cosmetics">Beauty and Cosmetics</string>
+	<string name="jwellery">Jwellery</string>
+	<string name="catergory_appliances">Appliances</string>
+	<string name="home_appliances">Home Appliances</string>
+	<string name="category_bags">Bags and Accessories</string>
+	<string name="travelling_bags">Travellling Bags</string>
+	<string name="laptop_bags">Laptop Bags</string>
+	<string name="bagpacks">Bagpacks</string>
+	<string name="offer">OFFER</string>
 </resources>
