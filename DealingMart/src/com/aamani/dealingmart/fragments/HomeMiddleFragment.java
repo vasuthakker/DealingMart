@@ -1,23 +1,18 @@
 package com.aamani.dealingmart.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.activities.HomeActivity;
-import com.aamani.dealingmart.adapter.HorizontalHomeProductAdapter;
-import com.aamani.dealingmart.view.HorizontalListView;
+import com.aamani.dealingmart.common.DealingMartConstatns;
 
 /**
  * Home Middle Fragment to show deal,news
@@ -27,15 +22,13 @@ import com.aamani.dealingmart.view.HorizontalListView;
  */
 public class HomeMiddleFragment extends Fragment {
 
-	private ViewPager dealViewPager;
-	private int[] dealImageArray = new int[] { R.drawable.banner_1,
-			R.drawable.banner_2, R.drawable.banner_3, R.drawable.banner_4 };
-	private static final int ROTATE_TIME = 3000;
-	private HorizontalListView productHorizontalListView;
 	private ImageView leftNavigationImageview;
 
 	private static final int LEFT_PAGE = 0;
 	private static final int MIDDLE_PAGE = 1;
+	private static FragmentManager fragmentManager;
+
+	// private static boolean firstTime = true;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,36 +43,8 @@ public class HomeMiddleFragment extends Fragment {
 	public void onStart() {
 		super.onStart();
 
-		// UI elements
-		dealViewPager = (ViewPager) getActivity().findViewById(
-				R.id.deal_viewpager);
-
-		dealViewPager.setAdapter(new DealImageAdapter(dealImageArray));
-
-		productHorizontalListView = (HorizontalListView) getActivity()
-				.findViewById(R.id.product_horizontal_listview);
-
 		leftNavigationImageview = (ImageView) getActivity().findViewById(
 				R.id.home_navigation_imageview);
-
-		productHorizontalListView.setAdapter(new HorizontalHomeProductAdapter(
-				getActivity()));
-
-		final Handler dealRoatateHandler = new Handler();
-		dealRoatateHandler.postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				int currentItem = dealViewPager.getCurrentItem();
-				if (currentItem == 3) {
-					currentItem = 0;
-				} else {
-					currentItem++;
-				}
-				dealViewPager.setCurrentItem(currentItem);
-				dealRoatateHandler.postDelayed(this, ROTATE_TIME);
-			}
-		}, ROTATE_TIME);
 
 		leftNavigationImageview.setOnClickListener(new OnClickListener() {
 
@@ -93,47 +58,28 @@ public class HomeMiddleFragment extends Fragment {
 				}
 			}
 		});
+
+		fragmentManager = getChildFragmentManager();
+
+		Fragment fragment = fragmentManager
+				.findFragmentById(R.id.category_fragment_base_layout);
+		if (fragment == null) {
+			changeChildFragment(new HomeDetailFragment(), null);
+		}
 	}
 
-	private class DealImageAdapter extends PagerAdapter {
-
-		private int[] dealImageArray;
-
-		public DealImageAdapter(int[] dealImageArray) {
-			this.dealImageArray = dealImageArray;
+	public static void changeChildFragment(Fragment fragment, String category) {
+		Bundle bundle = null;
+		if (category != null) {
+			bundle = new Bundle();
+			bundle.putString(DealingMartConstatns.CATEGORY_TITLE, category);
+			fragment.setArguments(bundle);
 		}
-
-		@Override
-		public int getCount() {
-			return dealImageArray.length;
-		}
-
-		// @Override
-		public boolean isViewFromObject(View view, Object object) {
-			return view == ((View) object);
-		}
-
-		@Override
-		public Parcelable saveState() {
-			return null;
-		}
-
-		@Override
-		public void destroyItem(View collection, int position, Object view) {
-			((ViewPager) collection).removeView((View) view);
-		}
-
-		@Override
-		public Object instantiateItem(View collection, int position) {
-			ImageView dealImageView = new ImageView(getActivity());
-
-			dealImageView.setLayoutParams(new LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-			dealImageView.setScaleType(ScaleType.FIT_XY);
-			dealImageView.setBackgroundResource(dealImageArray[position]);
-			((ViewPager) collection).addView(dealImageView, 0);
-			return dealImageView;
-		}
-
+		FragmentTransaction ft = fragmentManager.beginTransaction();
+		ft.replace(R.id.category_fragment_base_layout, fragment);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		ft.addToBackStack(null);
+		ft.commit();
 	}
+
 }

@@ -9,6 +9,54 @@
     <string name="title_deal_of_the_day">Deal of the day</string>
     <string name="new_arrivals">New Arrivals</string>
     <string name="category_title">Categories</string>
+    <string name="offer">OFFER</string>
+    <string name="title_activity_product_detail">ProductDetailActivity</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="specifications">Specifications</string>
+
+    <!-- category -->
+    <string name="category_electronics">Electronics</string>
+    <string name="mobile_accessories">Mobile &amp; Accessories</string>
+    <string name="tablet">Tablet</string>
+    <string name="category_book_stationary">Book &amp; Stationary</string>
+    <string name="book">Book</string>
+    <string name="stationary">Stationary</string>
+    <string name="category_giftarticles">Gift Articles</string>
+    <string name="photo_frame">Photo Frame</string>
+    <string name="golden_divinity">Golden Divinity</string>
+    <string name="crystal_showpiece">Crystal Showpiece</string>
+    <string name="designer_watch">Designer Watch</string>
+    <string name="sunglasses">Sunglasses</string>
+    <string name="handicraft">Handicraft</string>
+    <string name="hipflask">Hip Flask</string>
+    <string name="indianflag">Indian Flag</string>
+    <string name="lordganesh">Lord Ganesha</string>
+    <string name="silverpen">Silver Pen</string>
+    <string name="painting">Painting</string>
+    <string name="category_men">Men</string>
+    <string name="cravats">Cravats</string>
+    <string name="cufflinks">Cufflinks</string>
+    <string name="socks">Socks</string>
+    <string name="suspender">Suspender</string>
+    <string name="ties">Ties</string>
+    <string name="shirts">Shirts</string>
+    <string name="t_shirts">T-Shirts</string>
+    <string name="tuxeda_studs">Tuxeda Studs</string>
+    <string name="shorts">Shorts</string>
+    <string name="trackpants">Track Pants</string>
+    <string name="capri">Capri</string>
+    <string name="category_women">Women</string>
+    <string name="jeggings">Jeggings</string>
+    <string name="nightwear">Nightwear</string>
+    <string name="pendant">Pendant</string>
+    <string name="pyjamas">Pyjamas</string>
+    <string name="slip">Slip</string>
+    <string name="tights">Tights</string>
+    <string name="necklace">Necklace</string>
+    <string name="bangle">Bangle</string>
+    <string name="bracelet">Bracelet</string>
+    <string name="earrings">Earrings</string>
+    <string name="handbags">Hand Bags</string>
     <string name="category_lifestyle">Lifestyle</string>
     <string name="beauty_and_cosmetics">Beauty and Cosmetics</string>
     <string name="jwellery">Jewellery</string>
@@ -18,6 +66,5 @@
     <string name="travelling_bags">Travelling Bags</string>
     <string name="laptop_bags">Laptop Bags</string>
     <string name="bagpacks">Bagpacks</string>
-    <string name="offer">OFFER</string>
 
 </resources>

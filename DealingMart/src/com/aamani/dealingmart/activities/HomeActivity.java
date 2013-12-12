@@ -6,10 +6,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.widget.RelativeLayout;
 
 import com.aamani.dealingmart.R;
+import com.aamani.dealingmart.fragments.CategoryViewFragment;
+import com.aamani.dealingmart.fragments.HomeDetailFragment;
 import com.aamani.dealingmart.fragments.HomeLeftFragment;
 import com.aamani.dealingmart.fragments.HomeMiddleFragment;
+import com.aamani.dealingmart.interfaces.OnCategoryItemSelected;
 
 /**
  * Home activity
@@ -17,13 +22,19 @@ import com.aamani.dealingmart.fragments.HomeMiddleFragment;
  * @author Vasu
  * 
  */
-public class HomeActivity extends FragmentActivity {
+public class HomeActivity extends FragmentActivity implements
+		OnCategoryItemSelected {
 
 	private static ViewPager homeViewPager;
 	private static final int FRAGMENT_NUMBERS = 2;
 
 	private static final int LEFT_PAGE = 0;
 	private static final int MIDDLE_PAGE = 1;
+	private static final String TAG = "HomeActivity";
+
+	private RelativeLayout homeBaseLayout;
+	private static FragmentManager fragmentManager;
+	private static boolean isCategoryViewSelected = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +46,12 @@ public class HomeActivity extends FragmentActivity {
 		homeViewPager.setAdapter(new HomePager(getSupportFragmentManager()));
 
 		homeViewPager.setCurrentItem(MIDDLE_PAGE);
+
+		homeBaseLayout = (RelativeLayout) findViewById(R.id.home_base_layout);
+
+		fragmentManager = getSupportFragmentManager();
+
+		
 
 	}
 
@@ -85,5 +102,33 @@ public class HomeActivity extends FragmentActivity {
 		}
 		return currentPage;
 
+	}
+
+	@Override
+	public void onCategorySelected(String category) {
+		Log.i(TAG, "category name is " + category);
+		HomeMiddleFragment.changeChildFragment(new CategoryViewFragment(),
+				category);
+		isCategoryViewSelected = true;
+	}
+
+	// public static void changeFragment(Fragment fragment) {
+	// FragmentTransaction ft = fragmentManager.beginTransaction();
+	// ft.replace(R.id.category_fragment_base_layout, fragment);
+	// ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+	// ft.commit();
+	//
+	// }
+
+	@Override
+	public void onBackPressed() {
+		if (isCategoryViewSelected) {
+			isCategoryViewSelected = false;
+			HomeMiddleFragment.changeChildFragment(new HomeDetailFragment(),
+					null);
+
+		} else {
+			finish();
+		}
 	}
 }

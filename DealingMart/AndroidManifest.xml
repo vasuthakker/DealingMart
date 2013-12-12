@@ -26,6 +26,10 @@
             android:name="com.aamani.dealingmart.activities.HomeActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.aamani.dealingmart.activities.ProductDetailActivity"
+            android:label="@string/title_activity_product_detail" >
+        </activity>
     </application>
 
 </manifest>
