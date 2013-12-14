@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background_grey"
     android:orientation="vertical"
     android:paddingLeft="5dp"
@@ -14,12 +14,15 @@
         android:gravity="center_horizontal"
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
         android:id="@+id/category_banner_imageview"
         android:layout_width="match_parent"
-        android:layout_height="130dp" />
+        android:layout_height="130dp" 
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/category_productlist_listview"

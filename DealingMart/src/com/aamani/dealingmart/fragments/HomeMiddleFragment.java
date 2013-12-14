@@ -64,15 +64,17 @@ public class HomeMiddleFragment extends Fragment {
 		Fragment fragment = fragmentManager
 				.findFragmentById(R.id.category_fragment_base_layout);
 		if (fragment == null) {
-			changeChildFragment(new HomeDetailFragment(), null);
+			changeChildFragment(new HomeDetailFragment(), null, null);
 		}
 	}
 
-	public static void changeChildFragment(Fragment fragment, String category) {
+	public static void changeChildFragment(Fragment fragment, String category,
+			String subCategory) {
 		Bundle bundle = null;
 		if (category != null) {
 			bundle = new Bundle();
 			bundle.putString(DealingMartConstatns.CATEGORY_TITLE, category);
+			bundle.putString(DealingMartConstatns.CATEGORY_SUBCATEGORY, subCategory);
 			fragment.setArguments(bundle);
 		}
 		FragmentTransaction ft = fragmentManager.beginTransaction();

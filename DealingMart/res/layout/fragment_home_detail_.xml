@@ -60,68 +60,111 @@
             android:textSize="15sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/box_bg"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="@string/title_deal_of_the_day"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/text_blue"
-            android:textSize="15sp" />
-
-        <View
-            android:id="@+id/view1"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/grey_line" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/deal_viewpager"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </android.support.v4.view.ViewPager>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="147dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/box_bg"
-        android:orientation="vertical" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_bg"
+                android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/TextView04"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="@string/new_arrivals"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/text_blue"
-            android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/title_deal_of_the_day"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/text_blue"
+                    android:textSize="15sp" />
 
-        <View
-            android:id="@+id/View03"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/grey_line" />
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey_line" />
 
-        <com.aamani.dealingmart.view.HorizontalListView
-            android:id="@+id/product_horizontal_listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </com.aamani.dealingmart.view.HorizontalListView>
-    </LinearLayout>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/deal_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                </android.support.v4.view.ViewPager>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="147dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_bg"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TextView04"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/new_arrivals"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/text_blue"
+                    android:textSize="15sp" />
+
+                <View
+                    android:id="@+id/View03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey_line" />
+
+                <com.aamani.dealingmart.view.HorizontalListView
+                    android:id="@+id/product_horizontal_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                </com.aamani.dealingmart.view.HorizontalListView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="147dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/box_bg"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/brands_title"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/text_blue" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/grey_line" />
+
+                <com.aamani.dealingmart.view.HorizontalListView
+                    android:id="@+id/brands_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                </com.aamani.dealingmart.view.HorizontalListView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

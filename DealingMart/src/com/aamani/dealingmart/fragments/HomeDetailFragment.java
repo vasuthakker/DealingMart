@@ -1,9 +1,5 @@
 package com.aamani.dealingmart.fragments;
 
-import com.aamani.dealingmart.R;
-import com.aamani.dealingmart.adapter.ProductAdapter;
-import com.aamani.dealingmart.view.HorizontalListView;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -17,6 +13,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.aamani.dealingmart.R;
+import com.aamani.dealingmart.adapter.BrandAdapter;
+import com.aamani.dealingmart.view.HorizontalListView;
+
 public class HomeDetailFragment extends Fragment {
 
 	private ViewPager dealViewPager;
@@ -24,6 +24,8 @@ public class HomeDetailFragment extends Fragment {
 			R.drawable.banner_2, R.drawable.banner_3, R.drawable.banner_4 };
 	private static final int ROTATE_TIME = 3000;
 	private HorizontalListView productHorizontalListView;
+
+	private HorizontalListView brandListView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,8 +49,12 @@ public class HomeDetailFragment extends Fragment {
 		productHorizontalListView = (HorizontalListView) getActivity()
 				.findViewById(R.id.product_horizontal_listview);
 
-		productHorizontalListView.setAdapter(new ProductAdapter(
-				getActivity(), 20));
+		// productHorizontalListView.setAdapter(new ProductAdapter(
+		// getActivity(), 20));
+
+		brandListView = (HorizontalListView) getActivity().findViewById(
+				R.id.brands_listview);
+		brandListView.setAdapter(new BrandAdapter(getActivity()));
 
 		final Handler dealRoatateHandler = new Handler();
 		dealRoatateHandler.postDelayed(new Runnable() {
@@ -106,8 +112,6 @@ public class HomeDetailFragment extends Fragment {
 			((ViewPager) collection).addView(dealImageView, 0);
 			return dealImageView;
 		}
-		
-		
 
 	}
 }

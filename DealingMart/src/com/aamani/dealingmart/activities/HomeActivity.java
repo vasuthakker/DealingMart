@@ -51,8 +51,6 @@ public class HomeActivity extends FragmentActivity implements
 
 		fragmentManager = getSupportFragmentManager();
 
-		
-
 	}
 
 	// An adapter class for home viewpager
@@ -105,27 +103,25 @@ public class HomeActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void onCategorySelected(String category) {
+	public void onCategorySelected(String category,String subCategory) {
 		Log.i(TAG, "category name is " + category);
+		
 		HomeMiddleFragment.changeChildFragment(new CategoryViewFragment(),
-				category);
+				category,subCategory);
+		
+		homeViewPager.setCurrentItem(MIDDLE_PAGE);
+		
 		isCategoryViewSelected = true;
 	}
 
-	// public static void changeFragment(Fragment fragment) {
-	// FragmentTransaction ft = fragmentManager.beginTransaction();
-	// ft.replace(R.id.category_fragment_base_layout, fragment);
-	// ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-	// ft.commit();
-	//
-	// }
 
 	@Override
 	public void onBackPressed() {
 		if (isCategoryViewSelected) {
 			isCategoryViewSelected = false;
 			HomeMiddleFragment.changeChildFragment(new HomeDetailFragment(),
-					null);
+					null,null);
+			
 
 		} else {
 			finish();

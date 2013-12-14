@@ -66,5 +66,13 @@
     <string name="travelling_bags">Travelling Bags</string>
     <string name="laptop_bags">Laptop Bags</string>
     <string name="bagpacks">Bagpacks</string>
+    <string name="share_product_info">Share Product Information</string>
+    <string name="product_share_message">An offer is available on $, Please install the app from google playstore to access it.</string>
+    <string name="email_subject">Dealing Mart Offer</string>
+    <string name="twitter_not_installed">Twitter is not installed on your device</string>
+    <string name="facebook_not_installed">Facebook is not installed on your device</string>
+    <string name="title_activity_full_image">FullImageActivity</string>
+    <string name="brands_title">Brands</string>
+    <string name="no_spec_found">No specifications found</string>
 
 </resources>
