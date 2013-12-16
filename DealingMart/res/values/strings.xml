@@ -16,7 +16,7 @@
 
     <!-- category -->
     <string name="category_electronics">Electronics</string>
-    <string name="mobile_accessories">Mobile &amp; Accessories</string>
+    <string name="mobile">Mobile</string>
     <string name="tablet">Tablet</string>
     <string name="category_book_stationary">Book &amp; Stationary</string>
     <string name="book">Book</string>
@@ -74,5 +74,16 @@
     <string name="title_activity_full_image">FullImageActivity</string>
     <string name="brands_title">Brands</string>
     <string name="no_spec_found">No specifications found</string>
+    <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
+    <string name="continue_text">Continue</string>
+    <string name="home_decore">Home Decore</string>
+    <string name="office_decore">Office Decore</string>
+    <string name="clothing">Clothing</string>
+    <string name="other_accessories">Other Accessories</string>
+    <string name="category_healthVellness">Health &amp; Wellness</string>
+    <string name="kit">Kit</string>
+
+    <!-- error messages -->
+    <string name="no_products_found">No products found for this category,Please try another category</string>
 
 </resources>

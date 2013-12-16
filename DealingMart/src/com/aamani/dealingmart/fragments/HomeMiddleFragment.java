@@ -1,5 +1,6 @@
 package com.aamani.dealingmart.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,10 +10,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.activities.HomeActivity;
+import com.aamani.dealingmart.activities.ShoppingCartActivity;
 import com.aamani.dealingmart.common.DealingMartConstatns;
+import com.aamani.dealingmart.helper.CartHelper;
 
 /**
  * Home Middle Fragment to show deal,news
@@ -27,6 +32,11 @@ public class HomeMiddleFragment extends Fragment {
 	private static final int LEFT_PAGE = 0;
 	private static final int MIDDLE_PAGE = 1;
 	private static FragmentManager fragmentManager;
+
+	private static RelativeLayout cartLayout;
+	private static TextView cartNumberTextView;
+
+	private RelativeLayout shoppingCartViewLayout;
 
 	// private static boolean firstTime = true;
 
@@ -45,6 +55,13 @@ public class HomeMiddleFragment extends Fragment {
 
 		leftNavigationImageview = (ImageView) getActivity().findViewById(
 				R.id.home_navigation_imageview);
+
+		cartLayout = (RelativeLayout) getActivity().findViewById(
+				R.id.cart_layout);
+		cartNumberTextView = (TextView) getActivity().findViewById(
+				R.id.cart_number_textview);
+		shoppingCartViewLayout = (RelativeLayout) getActivity().findViewById(
+				R.id.shopping_cart_view_layout);
 
 		leftNavigationImageview.setOnClickListener(new OnClickListener() {
 
@@ -66,6 +83,19 @@ public class HomeMiddleFragment extends Fragment {
 		if (fragment == null) {
 			changeChildFragment(new HomeDetailFragment(), null, null);
 		}
+
+		shoppingCartViewLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),
+						ShoppingCartActivity.class);
+				startActivity(intent);
+			}
+		});
+
+		int cartProductNumber = CartHelper.fetchProdcutsCount(getActivity());
+		updateProductNumber(cartProductNumber);
 	}
 
 	public static void changeChildFragment(Fragment fragment, String category,
@@ -74,7 +104,8 @@ public class HomeMiddleFragment extends Fragment {
 		if (category != null) {
 			bundle = new Bundle();
 			bundle.putString(DealingMartConstatns.CATEGORY_TITLE, category);
-			bundle.putString(DealingMartConstatns.CATEGORY_SUBCATEGORY, subCategory);
+			bundle.putString(DealingMartConstatns.CATEGORY_SUBCATEGORY,
+					subCategory);
 			fragment.setArguments(bundle);
 		}
 		FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -82,6 +113,15 @@ public class HomeMiddleFragment extends Fragment {
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		ft.addToBackStack(null);
 		ft.commit();
+	}
+
+	public static void updateProductNumber(int number) {
+		if (number > 0) {
+			cartLayout.setVisibility(View.VISIBLE);
+			cartNumberTextView.setText(String.valueOf(number));
+		} else {
+			cartLayout.setVisibility(View.GONE);
+		}
 	}
 
 }

@@ -39,6 +39,10 @@
             android:name="com.aamani.dealingmart.activities.FullImageActivity"
             android:label="@string/title_activity_full_image" >
         </activity>
+        <activity
+            android:name="com.aamani.dealingmart.activities.ShoppingCartActivity"
+            android:label="@string/title_activity_shopping_cart" >
+        </activity>
     </application>
 
 </manifest>

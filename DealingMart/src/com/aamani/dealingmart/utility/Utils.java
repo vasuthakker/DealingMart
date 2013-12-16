@@ -5,20 +5,28 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.http.conn.HttpHostConnectException;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.aamani.dealingmart.R;
+import com.aamani.dealingmart.common.DealingMartConstatns;
 import com.aamani.dealingmart.entities.ProductEntity;
 
 public class Utils {
@@ -169,8 +177,14 @@ public class Utils {
 				}
 			}
 
-		} catch (Exception e) {
-			Log.e(TAG, "Exception", e);
+		} catch (HttpHostConnectException e) {
+			Log.e(TAG, "HttpHostConnectException", e);
+		} catch (IOException e) {
+			Log.e(TAG, "IOException", e);
+		} catch (XmlPullParserException e) {
+			Log.e(TAG, "XmlPullParserException", e);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
 		return productList;
 	}
@@ -225,19 +239,46 @@ public class Utils {
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 
 			result = (SoapObject) envelope.bodyIn;
-			// result1=(SoapObject)result.getProperty(0);
 
 			if (!result.getProperty(0).toString().equals(null)
 					|| result.getProperty(0).toString() != null) {
 				specifiaction = result.getProperty(0).toString();
 			}
-
-		} catch (Exception e) {
+		} catch (HttpHostConnectException e) {
 			specifiaction = context.getString(R.string.no_spec_found);
-			Log.e(TAG, "Exception", e);
+			Log.e(TAG, "HttpHostConnectException", e);
+		} catch (IOException e) {
+			specifiaction = context.getString(R.string.no_spec_found);
+			Log.e(TAG, "IOException", e);
+		} catch (XmlPullParserException e) {
+			specifiaction = context.getString(R.string.no_spec_found);
+			Log.e(TAG, "XmlPullParserException", e);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			specifiaction = context.getString(R.string.no_spec_found);
+			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
 
 		return specifiaction;
+	}
+
+	/**
+	 * Set preference
+	 */
+	public static void setPreference(Context context, String key, String value) {
+		SharedPreferences preference = context.getSharedPreferences(
+				DealingMartConstatns.SHARED_PREFERENCE, Context.MODE_PRIVATE);
+		Editor editor = preference.edit();
+		editor.putString(key, value);
+		editor.commit();
+	}
+
+	/**
+	 * Set preference
+	 */
+	public static String getPreference(Context context, String key) {
+		SharedPreferences preference = context.getSharedPreferences(
+				DealingMartConstatns.SHARED_PREFERENCE, Context.MODE_PRIVATE);
+		return preference.getString(key, null);
 	}
 
 }

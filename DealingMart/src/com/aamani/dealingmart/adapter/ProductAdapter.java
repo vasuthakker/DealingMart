@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -17,10 +18,10 @@ import android.widget.TextView;
 
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.activities.ProductDetailActivity;
-import com.aamani.dealingmart.asynctask.AsycImageLoaderTask;
 import com.aamani.dealingmart.common.DealingMartConstatns;
 import com.aamani.dealingmart.entities.ProductEntity;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 public class ProductAdapter extends BaseAdapter {
 
@@ -29,14 +30,14 @@ public class ProductAdapter extends BaseAdapter {
 	private List<ProductEntity> productList;
 	private ImageLoader imageLoader;
 
-	public ProductAdapter(Activity activity, List<ProductEntity> productList) {
+	public ProductAdapter(Activity activity, List<ProductEntity> productList,ImageLoader imageLoader) {
 		this.activity = activity;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.productList = productList;
 
-//		imageLoader = ImageLoader.getInstance();
-//		imageLoader.init(ImageLoaderConfiguration.createDefault(activity));
+		this.imageLoader=imageLoader;
+		
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class ProductAdapter extends BaseAdapter {
 
 		LinearLayout productLayout = (LinearLayout) view
 				.findViewById(R.id.product_item_layout);
-		 ImageView productImageView = (ImageView) view
+		final ImageView productImageView = (ImageView) view
 				.findViewById(R.id.hor_product_image);
 		ImageView hotProductImageView = (ImageView) view
 				.findViewById(R.id.hor_product_star_image);
@@ -72,7 +73,7 @@ public class ProductAdapter extends BaseAdapter {
 				.findViewById(R.id.hor_porduct_prize_textview);
 		TextView productNameTextView = (TextView) view
 				.findViewById(R.id.hor_porduct_name_textview);
-		 ProgressBar loadProgressBar = (ProgressBar) view
+		final ProgressBar loadProgressBar = (ProgressBar) view
 				.findViewById(R.id.hor_product_load_progressbar);
 
 		final ProductEntity product = productList.get(position);
@@ -93,23 +94,27 @@ public class ProductAdapter extends BaseAdapter {
 			productNameTextView.setText(product.getProductName());
 			productPriceTextView.setText("Rs:" + product.getProductPrice());
 
-			if (product.getProductImage() != null
+			if (productImageView != null && product.getProductImage() != null
 					&& !product.getProductImage().isEmpty()) {
-				new AsycImageLoaderTask(productImageView, loadProgressBar)
-						.execute(product.getProductImage());
+				// new AsycImageLoaderTask(productImageView, loadProgressBar)
+				// .execute(product.getProductImage());
 
-//				imageLoader.loadImage(product.getProductImage(),
-//						new SimpleImageLoadingListener() {
-//							@Override
-//							public void onLoadingComplete(String imageUri,
-//									View view, Bitmap loadedImage) {
-//								loadProgressBar.setVisibility(View.GONE);
-//								productImageView.setImageBitmap(loadedImage);
-//							}
-//						});
+				if (activity != null && imageLoader != null) {
+					imageLoader.loadImage(product.getProductImage(),
+							new SimpleImageLoadingListener() {
+								@Override
+								public void onLoadingComplete(String imageUri,
+										View view, Bitmap loadedImage) {
+									loadProgressBar.setVisibility(View.GONE);
+									productImageView
+											.setImageBitmap(loadedImage);
+								}
+							});
+				}
 
 			}
 		}
+		
 		return view;
 
 	}

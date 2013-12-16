@@ -2,11 +2,13 @@ package com.aamani.dealingmart.activities;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.common.DealingMartConstatns;
 import com.aamani.dealingmart.entities.ProductEntity;
+import com.aamani.dealingmart.fragments.HomeMiddleFragment;
+import com.aamani.dealingmart.helper.CartHelper;
 import com.aamani.dealingmart.utility.Utils;
 
 public class FullImageActivity extends Activity {
@@ -26,6 +30,8 @@ public class FullImageActivity extends Activity {
 
 	private TextView productNameTextView;
 	private TextView productPriceTextView;
+
+	private Button buyNowButton;
 
 	private ProgressBar loadingProgressBar;
 
@@ -45,6 +51,8 @@ public class FullImageActivity extends Activity {
 		productPriceTextView = (TextView) findViewById(R.id.full_image_product_price_textview);
 
 		loadingProgressBar = (ProgressBar) findViewById(R.id.full_image_progressbar);
+
+		buyNowButton = (Button) findViewById(R.id.full_image_buy_now_button);
 
 		downImageView.setOnClickListener(new OnClickListener() {
 
@@ -71,10 +79,24 @@ public class FullImageActivity extends Activity {
 		if (productObject != null) {
 
 			new AsycImageLoaderTask().execute(productObject.getProductImage());
-			productNameTextView.setText(productObject.getProductName());
-			productPriceTextView.setText("Rs:"
-					+ productObject.getProductPrice());
+
 		}
+
+		buyNowButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				CartHelper.insertPorductToCart(getApplicationContext(),
+						productObject);
+
+				HomeMiddleFragment.updateProductNumber(CartHelper
+						.fetchProdcutsCount(getApplicationContext()));
+
+				Intent intent = new Intent(getApplicationContext(),
+						ShoppingCartActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private class AsycImageLoaderTask extends AsyncTask<String, Void, Void> {

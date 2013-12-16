@@ -18,16 +18,20 @@ import android.widget.TextView;
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.entities.ProductEntity;
 import com.aamani.dealingmart.utility.Utils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CategoryProductListAdapter extends BaseAdapter {
 
+	private static final int LAYOUT_HEIGHT = 140;
 	private Activity activity;
 	private LayoutInflater inflater;
 	private List<Integer> expandedPosList;
 	private List<ProductEntity> productList;
+	private ImageLoader imageLoader;
 
 	public CategoryProductListAdapter(Activity activity,
-			List<ProductEntity> productList) {
+			List<ProductEntity> productList, ImageLoader imageLoader) {
+		this.imageLoader = imageLoader;
 		this.activity = activity;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -65,10 +69,10 @@ public class CategoryProductListAdapter extends BaseAdapter {
 		final GridView productGridView = (GridView) view
 				.findViewById(R.id.category_product_item_gridview);
 
-		categoryTitleTextView.setText("Mobile");
 		// if (position == 0) {
 		productGridView.setVisibility(View.VISIBLE);
-		productGridView.setAdapter(new ProductAdapter(activity, productList));
+		productGridView.setAdapter(new ProductAdapter(activity, productList,
+				imageLoader));
 
 		int gridViewHeight = (int) productList.size() / 3;
 
@@ -78,7 +82,7 @@ public class CategoryProductListAdapter extends BaseAdapter {
 
 		productGridView.setLayoutParams(new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, Utils.dpToPx(activity,
-						(110 * gridViewHeight))));
+						(LAYOUT_HEIGHT * gridViewHeight) + 10)));
 		plusTextView.setText("-");
 		if (!expandedPosList.contains(position)) {
 			expandedPosList.add(position);
@@ -113,6 +117,7 @@ public class CategoryProductListAdapter extends BaseAdapter {
 		} else {
 			productGridView.setVisibility(View.GONE);
 		}
+
 		return view;
 	}
 }

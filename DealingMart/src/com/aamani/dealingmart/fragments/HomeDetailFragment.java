@@ -15,7 +15,10 @@ import android.widget.ImageView.ScaleType;
 
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.adapter.BrandAdapter;
+import com.aamani.dealingmart.adapter.ProductAdapter;
 import com.aamani.dealingmart.view.HorizontalListView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class HomeDetailFragment extends Fragment {
 
@@ -26,6 +29,7 @@ public class HomeDetailFragment extends Fragment {
 	private HorizontalListView productHorizontalListView;
 
 	private HorizontalListView brandListView;
+	private ImageLoader imageLoader;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +43,9 @@ public class HomeDetailFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
+		
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
 
 		// UI elements
 		dealViewPager = (ViewPager) getActivity().findViewById(
@@ -49,8 +56,8 @@ public class HomeDetailFragment extends Fragment {
 		productHorizontalListView = (HorizontalListView) getActivity()
 				.findViewById(R.id.product_horizontal_listview);
 
-		// productHorizontalListView.setAdapter(new ProductAdapter(
-		// getActivity(), 20));
+//		 productHorizontalListView.setAdapter(new ProductAdapter(
+//		 getActivity(), 20,imageLoader));
 
 		brandListView = (HorizontalListView) getActivity().findViewById(
 				R.id.brands_listview);

@@ -2,6 +2,7 @@ package com.aamani.dealingmart.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +18,8 @@ import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.asynctask.AsycImageLoaderTask;
 import com.aamani.dealingmart.common.DealingMartConstatns;
 import com.aamani.dealingmart.entities.ProductEntity;
+import com.aamani.dealingmart.fragments.HomeMiddleFragment;
+import com.aamani.dealingmart.helper.CartHelper;
 import com.aamani.dealingmart.utility.Utils;
 
 /**
@@ -86,13 +89,12 @@ public class ProductDetailActivity extends Activity {
 			productPrizeTextView.setText("Rs:"
 					+ productObject.getProductPrice());
 
-			productSpecificationTextView.setText(Utils
-					.getProductSpectification(getApplicationContext(),
-							productObject.getProductId()));
+			new SetSpecificationTask().execute();
 
 			// setting image
 			new AsycImageLoaderTask(productImage, loadingProgressbar)
 					.execute(productObject.getProductImage());
+
 		}
 
 		shareSMSImageView.setOnClickListener(new OnClickListener() {
@@ -226,5 +228,37 @@ public class ProductDetailActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+
+		buyNowButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				CartHelper.insertPorductToCart(getApplicationContext(),
+						productObject);
+
+				HomeMiddleFragment.updateProductNumber(CartHelper
+						.fetchProdcutsCount(getApplicationContext()));
+
+				Intent intent = new Intent(getApplicationContext(),
+						ShoppingCartActivity.class);
+				startActivity(intent);
+
+			}
+		});
+	}
+
+	// Async task for fetching specification
+	private class SetSpecificationTask extends AsyncTask<Void, Void, String> {
+
+		@Override
+		protected String doInBackground(Void... params) {
+			return Utils.getProductSpectification(getApplicationContext(),
+					productObject.getProductId());
+		}
+
+		@Override
+		protected void onPostExecute(String specification) {
+			productSpecificationTextView.setText(specification);
+		}
 	}
 }

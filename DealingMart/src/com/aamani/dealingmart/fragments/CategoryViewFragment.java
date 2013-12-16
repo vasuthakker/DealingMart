@@ -12,12 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.adapter.CategoryProductListAdapter;
 import com.aamani.dealingmart.common.DealingMartConstatns;
 import com.aamani.dealingmart.entities.ProductEntity;
 import com.aamani.dealingmart.utility.Utils;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 /**
  * Fragment to display the product according to category
@@ -34,6 +37,7 @@ public class CategoryViewFragment extends Fragment {
 	private String category;
 	private String subCategory;
 	private List<ProductEntity> products;
+	private ImageLoader imageLoader;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +51,9 @@ public class CategoryViewFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
+
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
 
 		categoryBannerImageview = (ImageView) getActivity().findViewById(
 				R.id.category_banner_imageview);
@@ -100,8 +107,7 @@ public class CategoryViewFragment extends Fragment {
 			if (category != null && subCategory != null) {
 				products = Utils.getProducts(category, subCategory);
 			}
-			
-			//products = Utils.getProducts("Electronics", "Mobile");
+
 			return null;
 		}
 
@@ -113,7 +119,12 @@ public class CategoryViewFragment extends Fragment {
 			if (products != null && !products.isEmpty()) {
 				Utils.setStrictPolicy();
 				categoryListView.setAdapter(new CategoryProductListAdapter(
-						getActivity(), products));
+						getActivity(), products, imageLoader));
+
+			} else {
+				Toast.makeText(getActivity(),
+						getString(R.string.no_products_found),
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 

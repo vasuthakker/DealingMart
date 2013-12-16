@@ -26,17 +26,33 @@
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/TextView02"
+            <RelativeLayout
+                android:id="@+id/category_lifestyle_title_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/text_blue"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:text="@string/category_lifestyle"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/white" />
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/TextView02"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/text_blue"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/category_lifestyle"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/lifestyle_plus_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="+"
+                    android:textSize="20sp" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,19 +114,101 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/text_blue" />
                 </RelativeLayout>
+
+                <View
+                    android:id="@+id/clothing_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/category_clothing_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:visibility="gone" >
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/ImageView01"
+                        android:text="@string/clothing"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/text_blue" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/otheraccessories_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/category_other_accessories_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:visibility="gone" >
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/ImageView01"
+                        android:text="@string/other_accessories"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/text_blue" />
+                </RelativeLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/TextView05"
+            <RelativeLayout
+                android:id="@+id/category_appliance_title_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/text_blue"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:text="@string/catergory_appliances"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/white" />
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/TextView05"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/text_blue"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/catergory_appliances"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/appliance_plus_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="+"
+                    android:textSize="20sp" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,6 +236,70 @@
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/ImageView02"
                         android:text="@string/home_appliances"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/text_blue" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/View01"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey_line" />
+
+                <RelativeLayout
+                    android:id="@+id/category_home_decore_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp" >
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:id="@+id/TextView06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/ImageView02"
+                        android:text="@string/home_decore"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/text_blue" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/office_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/category_office_decore_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:visibility="gone" >
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:id="@+id/TextView06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/ImageView02"
+                        android:text="@string/office_decore"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/text_blue" />
                 </RelativeLayout>
@@ -303,7 +465,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/imageView1"
-                        android:text="@string/mobile_accessories"
+                        android:text="@string/mobile"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/text_blue" />
                 </RelativeLayout>
@@ -502,7 +664,7 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/golden_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/grey_line"
@@ -1281,10 +1443,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/nightwear_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_nightwear_layout"
@@ -1313,10 +1476,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/pendant_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_pendant_layout"
@@ -1345,10 +1509,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/pyjamas_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_pyjamas_layout"
@@ -1377,10 +1542,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/slip_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_slip_layout"
@@ -1409,10 +1575,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/womenTshirts_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_ladies_t_shirts_layout"
@@ -1441,10 +1608,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/tights_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_tights_layout"
@@ -1473,10 +1641,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/necklace_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_necklace_layout"
@@ -1505,10 +1674,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/bangle_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_bangle_layout"
@@ -1537,10 +1707,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/bracelet_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_bracelet_layout"
@@ -1569,10 +1740,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/earring_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_earring_layout"
@@ -1601,10 +1773,11 @@
                 </RelativeLayout>
 
                 <View
-                    android:id="@+id/View02"
+                    android:id="@+id/handbags_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_line" />
+                    android:background="@color/grey_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/category_handbags_layout"
@@ -1628,6 +1801,55 @@
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/ImageView02"
                         android:text="@string/handbags"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/text_blue" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/category_health_wellness_title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/TextView08"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/text_blue"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/category_healthVellness"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/category_kit_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp" >
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:id="@+id/TextView06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/ImageView02"
+                        android:text="@string/kit"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/text_blue" />
                 </RelativeLayout>

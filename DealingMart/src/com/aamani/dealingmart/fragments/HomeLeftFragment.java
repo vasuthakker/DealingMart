@@ -19,17 +19,23 @@ public class HomeLeftFragment extends Fragment {
 	private OnCategoryItemSelected onCategorySelectedListener;
 
 	// titles
+	private RelativeLayout lifeStyleTitleLayout;
 	private RelativeLayout menTitleLayout;
 	private RelativeLayout womenTitleLayout;
 	private RelativeLayout giftTitleLayout;
 	private RelativeLayout bagsAccessoriesTitleLayout;
+	private RelativeLayout applianceTitleLayout;
 
 	// lifestyle
 	private RelativeLayout lifBeautyAndCosmeticsLayout;
 	private RelativeLayout lifJewelleryLayout;
+	private RelativeLayout lifClothingLayout;
+	private RelativeLayout lifOtherAccessoriesLayout;
 
 	// appliances
 	private RelativeLayout appHomeAppiancesLayout;
+	private RelativeLayout appHomeDecoreLayout;
+	private RelativeLayout appOfficeDecoreLayout;
 
 	// bag and accessories
 	private RelativeLayout bagTravellingBagsLayout;
@@ -71,9 +77,33 @@ public class HomeLeftFragment extends Fragment {
 	private RelativeLayout menTrackPantstLayout;
 	private RelativeLayout menCapriLayout;
 
+	// women
+	private RelativeLayout womenCapriLayout;
+	private RelativeLayout womenJegginsLayout;
+	private RelativeLayout womenNightwearLayout;
+	private RelativeLayout womenPendantLayout;
+	private RelativeLayout womenPyjamasLayout;
+	private RelativeLayout womenSlipLayout;
+	private RelativeLayout womenTshirtsLayout;
+	private RelativeLayout womenTightsLayout;
+	private RelativeLayout womenNecklaceLayout;
+	private RelativeLayout womenBanglesLayout;
+	private RelativeLayout womenBraceletLayout;
+	private RelativeLayout womenEarringsLayout;
+	private RelativeLayout womenHandBagsLayout;
+
+	// helth and wellness
+	private RelativeLayout helthKitLayout;
+
 	// lines
+	private View clothingLineView;
+	private View otherAccessoriesLineView;
+
 	private View backPacksLineView;
 
+	private View officeDecoreLineView;
+
+	private View goldenDivinityLineView;
 	private View crystalLineView;
 	private View designerLineView;
 	private View sunglassLineView;
@@ -95,26 +125,25 @@ public class HomeLeftFragment extends Fragment {
 	private View trackPantsLineView;
 	private View capriLineView;
 
-	// women
-	private RelativeLayout womenCapriLayout;
-	private RelativeLayout womenJegginsLayout;
-	private RelativeLayout womenNightwearLayout;
-	private RelativeLayout womenPendantLayout;
-	private RelativeLayout womenPyjamasLayout;
-	private RelativeLayout womenSlipLayout;
-	private RelativeLayout womenTshirtsLayout;
-	private RelativeLayout womenTightsLayout;
-	private RelativeLayout womenNecklaceLayout;
-	private RelativeLayout womenBanglesLayout;
-	private RelativeLayout womenBraceletLayout;
-	private RelativeLayout womenEarringsLayout;
-	private RelativeLayout womenHandBagsLayout;
+	private View nightWearLineView;
+	private View pendantLineView;
+	private View pyjamasLineView;
+	private View slipLineView;
+	private View wTShirtsLineView;
+	private View tightsLineView;
+	private View necklaceLineView;
+	private View bangleLineView;
+	private View braceletLineView;
+	private View earringsLineView;
+	private View handBagsLineView;
 
 	// textview plus
+	private TextView lifePlusTextView;
 	private TextView menPlusTextView;
 	private TextView womenPlusTextView;
 	private TextView giftPlusTextView;
 	private TextView bagsAccessoriesView;
+	private TextView appliancePlusTextView;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -142,6 +171,9 @@ public class HomeLeftFragment extends Fragment {
 		super.onStart();
 		// UI initialization
 
+		lifePlusTextView = (TextView) getActivity().findViewById(
+				R.id.lifestyle_plus_textview);
+
 		menPlusTextView = (TextView) getActivity().findViewById(
 				R.id.men_plus_textview);
 		womenPlusTextView = (TextView) getActivity().findViewById(
@@ -150,16 +182,30 @@ public class HomeLeftFragment extends Fragment {
 				R.id.category_gift_plus_textview);
 		bagsAccessoriesView = (TextView) getActivity().findViewById(
 				R.id.bagsAccessories_plus_textview);
+		appliancePlusTextView = (TextView) getActivity().findViewById(
+				R.id.appliance_plus_textview);
 
 		// lifestyle
+		lifeStyleTitleLayout = (RelativeLayout) getActivity().findViewById(
+				R.id.category_lifestyle_title_layout);
 		lifBeautyAndCosmeticsLayout = (RelativeLayout) getActivity()
 				.findViewById(R.id.category_beauty_and_cosmetics_layout);
 		lifJewelleryLayout = (RelativeLayout) getActivity().findViewById(
 				R.id.category_jewellery_layout);
+		lifClothingLayout = (RelativeLayout) getActivity().findViewById(
+				R.id.category_clothing_layout);
+		lifOtherAccessoriesLayout = (RelativeLayout) getActivity()
+				.findViewById(R.id.category_other_accessories_layout);
 
 		// appliance
+		applianceTitleLayout = (RelativeLayout) getActivity().findViewById(
+				R.id.category_appliance_title_layout);
 		appHomeAppiancesLayout = (RelativeLayout) getActivity().findViewById(
 				R.id.category_home_appliances_layout);
+		appHomeDecoreLayout = (RelativeLayout) getActivity().findViewById(
+				R.id.category_home_decore_layout);
+		appOfficeDecoreLayout = (RelativeLayout) getActivity().findViewById(
+				R.id.category_office_decore_layout);
 
 		// bag and accessories
 		bagsAccessoriesTitleLayout = (RelativeLayout) getActivity()
@@ -265,10 +311,29 @@ public class HomeLeftFragment extends Fragment {
 		womenHandBagsLayout = (RelativeLayout) getActivity().findViewById(
 				R.id.category_handbags_layout);
 
+		// helth and wellness
+		helthKitLayout = (RelativeLayout) getActivity().findViewById(
+				R.id.category_kit_layout);
+
 		// line views
+
+		// lifeStyle
+		clothingLineView = (View) getActivity()
+				.findViewById(R.id.clothing_line);
+		otherAccessoriesLineView = (View) getActivity().findViewById(
+				R.id.otheraccessories_line);
+
+		// bag and accessories
 		backPacksLineView = (View) getActivity().findViewById(
 				R.id.backpacks_line);
 
+		// appliances
+		officeDecoreLineView = (View) getActivity().findViewById(
+				R.id.office_line);
+
+		// gift article
+		goldenDivinityLineView = (View) getActivity().findViewById(
+				R.id.golden_line);
 		crystalLineView = (View) getActivity().findViewById(R.id.crystal_line);
 		designerLineView = (View) getActivity()
 				.findViewById(R.id.designer_line);
@@ -303,110 +368,233 @@ public class HomeLeftFragment extends Fragment {
 				R.id.trackpents_line);
 		capriLineView = (View) getActivity().findViewById(R.id.capri_line);
 
+		// women line Views
+		nightWearLineView = (View) getActivity().findViewById(
+				R.id.nightwear_line);
+		pendantLineView = (View) getActivity().findViewById(R.id.pendant_line);
+		pyjamasLineView = (View) getActivity().findViewById(R.id.pyjamas_line);
+		slipLineView = (View) getActivity().findViewById(R.id.slip_line);
+		wTShirtsLineView = (View) getActivity().findViewById(
+				R.id.womenTshirts_line);
+		tightsLineView = (View) getActivity().findViewById(R.id.tights_line);
+		necklaceLineView = (View) getActivity()
+				.findViewById(R.id.necklace_line);
+		bangleLineView = (View) getActivity().findViewById(R.id.bangle_line);
+		braceletLineView = (View) getActivity()
+				.findViewById(R.id.bracelet_line);
+		earringsLineView = (View) getActivity().findViewById(R.id.earring_line);
+		handBagsLineView = (View) getActivity()
+				.findViewById(R.id.handbags_line);
+
 		// **listeners
+
 		lifBeautyAndCosmeticsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_BEAUTY_AND_COSMETICS));
+				DealingMartConstatns.CATEGORY_LIFESTYLE,
+				DealingMartConstatns.SUBCATEGORY_BEAUTY_AND_COSMETICS));
 		lifJewelleryLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_JEWELLERY));
+				DealingMartConstatns.CATEGORY_LIFESTYLE,
+				DealingMartConstatns.SUBCATEGORY_JEWELLERY));
+		lifClothingLayout.setOnClickListener(new OnCategoryClick(
+				DealingMartConstatns.CATEGORY_LIFESTYLE,
+				DealingMartConstatns.SUBCATEGORY_CLOTHING));
+		lifOtherAccessoriesLayout.setOnClickListener(new OnCategoryClick(
+				DealingMartConstatns.CATEGORY_LIFESTYLE,
+				DealingMartConstatns.SUBCATEGORY_OTHER_ACCESSORIES));
 
 		appHomeAppiancesLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_HOME_APPLIANCES));
+				DealingMartConstatns.CATEGORY_APPLIANCE,
+				DealingMartConstatns.SUBCATEGORY_HOME_APPLIANCES));
+		appHomeDecoreLayout.setOnClickListener(new OnCategoryClick(
+				DealingMartConstatns.CATEGORY_APPLIANCE,
+				DealingMartConstatns.SUBCATEGORY_HOME_DECORE));
+		appOfficeDecoreLayout.setOnClickListener(new OnCategoryClick(
+				DealingMartConstatns.CATEGORY_APPLIANCE,
+				DealingMartConstatns.SUBCATEGORY_OFFICE_DECORE));
 
 		bagTravellingBagsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_TRAVELLING_BAGS));
+				DealingMartConstatns.CATEGORY_BAGS_ACCESSORIES,
+
+				DealingMartConstatns.SUBCATEGORY_TRAVELLING_BAGS));
 		bagLaptopBagsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_LAPTOP_BAGS));
+				DealingMartConstatns.CATEGORY_BAGS_ACCESSORIES,
+				DealingMartConstatns.SUBCATEGORY_LAPTOP_BAGS));
 		bagBagPacksLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_BAGPACKS));
+				DealingMartConstatns.CATEGORY_BAGS_ACCESSORIES,
+				DealingMartConstatns.SUBCATEGORY_BAGPACKS));
 
 		elecMobileAccessoriesLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_MOBILE_ACCESSORIES));
+				DealingMartConstatns.CATEGORY_ELECTRONICS,
+				DealingMartConstatns.SUBCATEGORY_MOBILE_ACCESSORIES));
 		elecTabletLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_TABLET));
+				DealingMartConstatns.CATEGORY_ELECTRONICS,
+				DealingMartConstatns.SUBCATEGORY_TABLET));
 
 		bookSatBookLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_BOOK));
+				DealingMartConstatns.CATEGORY_STATIONARY,
+				DealingMartConstatns.SUBCATEGORY_BOOK));
 		bookStaStationaryLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_STATIONARY));
+				DealingMartConstatns.CATEGORY_STATIONARY,
+				DealingMartConstatns.SUBCATEGORY_STATIONARY));
 
 		gifPhotoFrameLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_PHOTO_FRAME));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_PHOTO_FRAME));
 		gifGoldenDivinityLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_GOLDEN_DIVINITY));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_GOLDEN_DIVINITY));
 		gifCrystalShowpieceLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_CRYSTAL_SHOWPIECE));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_CRYSTAL_SHOWPIECE));
 		gifDesignerWatchLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_DESIGNER_WATCH));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_DESIGNER_WATCH));
 		gifSunglassesLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_SUNGLASSES));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_SUNGLASSES));
 		gifHandiCraftLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_HANDICRAFT));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_HANDICRAFT));
 		gifHipFlackLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_HIP_FLASK));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_HIP_FLASK));
 		gifIndianFlagLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_INDIAN_FLAG));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_INDIAN_FLAG));
 		gifLordGaneshaLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_LORD_GANESHA));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_LORD_GANESHA));
 		gifSilverPenLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_SILVER_PEN));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_SILVER_PEN));
 		gifPaintingLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_PAINTING));
+				DealingMartConstatns.CATEGORY_GIFT_ARTICALS,
+				DealingMartConstatns.SUBCATEGORY_PAINTING));
 
 		menCravatLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_CRAVATS));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_CRAVATS));
 		menCuffLinksLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_CUFFLINKS));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_CUFFLINKS));
 		menSocksLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_SOCKS));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_SOCKS));
 		menSuspenderLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_SUSPENDER));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_SUSPENDER));
 		menTiesLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_TIES));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_TIES));
 		menShirtsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_SHIRTS));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_SHIRTS));
 		menTShirtsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_T_SHIRTS));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_T_SHIRTS));
 		menTuxedaStusLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_TUXEDA_STUDS));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_TUXEDA_STUDS));
 		menShortsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_SHORTS));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_SHORTS));
 		menTrackPantstLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_TRACKPANTS));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_TRACKPANTS));
 		menCapriLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_CAPRI));
+				DealingMartConstatns.CATEGORY_MEN,
+				DealingMartConstatns.SUBCATEGORY_CAPRI));
 
 		womenCapriLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_WCAPRI));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_WCAPRI));
 		womenJegginsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_JEGGINGS));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_JEGGINGS));
 		womenNightwearLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_NIGHTWEAR));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_NIGHTWEAR));
 		womenPendantLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_PENDANT));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_PENDANT));
 		womenPyjamasLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_PYJAMAS));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_PYJAMAS));
 		womenSlipLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_SLIP));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_SLIP));
 		womenTshirtsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_WOMEN_T_SHIRTS));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_WOMEN_T_SHIRTS));
 		womenTightsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_TIGHTS));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_TIGHTS));
 		womenNecklaceLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_NECKLACE));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_NECKLACE));
 		womenBanglesLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_BANGLE));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_BANGLE));
 		womenBraceletLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_BRACELET));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_BRACELET));
 		womenEarringsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_EARRINGS));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_EARRINGS));
 		womenHandBagsLayout.setOnClickListener(new OnCategoryClick(
-				DealingMartConstatns.CATEGORY_HAND_BAGS));
+				DealingMartConstatns.CATEGORY_WOMEN,
+				DealingMartConstatns.SUBCATEGORY_HAND_BAGS));
+
+		// helth and wllness
+		helthKitLayout.setOnClickListener(new OnCategoryClick(
+				DealingMartConstatns.CATEGORY_HEALTH_WELLNESS,
+				DealingMartConstatns.SUBCATEGORY_KIT));
+
+		lifeStyleTitleLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				int visibility = View.GONE;
+				if (lifOtherAccessoriesLayout.getVisibility() == View.VISIBLE) {
+					visibility = View.GONE;
+					lifePlusTextView.setText("+");
+				} else {
+					visibility = View.VISIBLE;
+					lifePlusTextView.setText("-");
+				}
+
+				lifClothingLayout.setVisibility(visibility);
+				lifOtherAccessoriesLayout.setVisibility(visibility);
+				clothingLineView.setVisibility(visibility);
+				otherAccessoriesLineView.setVisibility(visibility);
+
+			}
+		});
+
+		applianceTitleLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				int visiblity = View.GONE;
+				if (appOfficeDecoreLayout.getVisibility() == View.VISIBLE) {
+					visiblity = View.GONE;
+					appliancePlusTextView.setText("+");
+				} else {
+					visiblity = View.VISIBLE;
+					appliancePlusTextView.setText("-");
+				}
+				appOfficeDecoreLayout.setVisibility(visiblity);
+				officeDecoreLineView.setVisibility(visiblity);
+
+			}
+		});
 
 		bagsAccessoriesTitleLayout.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+
 				int visiblity = View.GONE;
 				if (bagBagPacksLayout.getVisibility() == View.VISIBLE) {
 					visiblity = View.GONE;
@@ -424,7 +612,7 @@ public class HomeLeftFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+
 				int visiblity = View.GONE;
 				if (gifPaintingLayout.getVisibility() == View.VISIBLE) {
 					visiblity = View.GONE;
@@ -444,6 +632,7 @@ public class HomeLeftFragment extends Fragment {
 				gifSilverPenLayout.setVisibility(visiblity);
 				gifPaintingLayout.setVisibility(visiblity);
 
+				goldenDivinityLineView.setVisibility(visiblity);
 				crystalLineView.setVisibility(visiblity);
 				designerLineView.setVisibility(visiblity);
 				sunglassLineView.setVisibility(visiblity);
@@ -518,6 +707,19 @@ public class HomeLeftFragment extends Fragment {
 				womenEarringsLayout.setVisibility(visiblity);
 				womenHandBagsLayout.setVisibility(visiblity);
 				womenTightsLayout.setVisibility(visiblity);
+
+				nightWearLineView.setVisibility(visiblity);
+				pendantLineView.setVisibility(visiblity);
+				pyjamasLineView.setVisibility(visiblity);
+				slipLineView.setVisibility(visiblity);
+				wTShirtsLineView.setVisibility(visiblity);
+				tightsLineView.setVisibility(visiblity);
+				necklaceLineView.setVisibility(visiblity);
+				bangleLineView.setVisibility(visiblity);
+				braceletLineView.setVisibility(visiblity);
+				earringsLineView.setVisibility(visiblity);
+				handBagsLineView.setVisibility(visiblity);
+
 			}
 		});
 
@@ -526,16 +728,17 @@ public class HomeLeftFragment extends Fragment {
 	private class OnCategoryClick implements OnClickListener {
 
 		private String category;
-		private String subCateogory;
+		private String subCategory;
 
-		OnCategoryClick(String category) {
+		OnCategoryClick(String category, String subCategory) {
 			this.category = category;
+			this.subCategory = subCategory;
 		}
 
 		@Override
 		public void onClick(View v) {
-			onCategorySelectedListener.onCategorySelected(category,
-					subCateogory);
+			onCategorySelectedListener
+					.onCategorySelected(category, subCategory);
 		}
 
 	}

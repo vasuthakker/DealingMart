@@ -11,18 +11,19 @@
         android:id="@+id/category_title_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/text_blue"
         android:gravity="center_horizontal"
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
-        android:textColor="@color/white"
-        android:layout_marginTop="5dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white" />
 
     <ImageView
         android:id="@+id/category_banner_imageview"
         android:layout_width="match_parent"
-        android:layout_height="130dp" 
-        android:visibility="gone"/>
+        android:layout_height="130dp"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/category_productlist_listview"
