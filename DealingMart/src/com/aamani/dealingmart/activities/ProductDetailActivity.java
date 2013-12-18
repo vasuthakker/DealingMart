@@ -20,7 +20,7 @@ import com.aamani.dealingmart.common.DealingMartConstatns;
 import com.aamani.dealingmart.entities.ProductEntity;
 import com.aamani.dealingmart.fragments.HomeMiddleFragment;
 import com.aamani.dealingmart.helper.CartHelper;
-import com.aamani.dealingmart.utility.Utils;
+import com.aamani.dealingmart.helper.WebServiceHelper;
 
 /**
  * Activity for product detail
@@ -41,7 +41,6 @@ public class ProductDetailActivity extends Activity {
 	private TextView productPrizeTextView;
 	private Button buyNowButton;
 	private RatingBar productRatingBar;
-	private TextView productOfferTextView;
 	private TextView productSpecificationTextView;
 
 	private ImageView shareSMSImageView;
@@ -56,6 +55,10 @@ public class ProductDetailActivity extends Activity {
 
 	private ProgressBar loadingProgressbar;
 
+	private RelativeLayout cartNumberLayout;
+	private TextView cartNumberTextView;
+	private RelativeLayout cartClickLayout;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,8 +66,8 @@ public class ProductDetailActivity extends Activity {
 
 		// UI
 		productNameTextView = (TextView) findViewById(R.id.product_detail_name_textview);
+
 		productPrizeTextView = (TextView) findViewById(R.id.product_detail_prize_textview);
-		productOfferTextView = (TextView) findViewById(R.id.product_detail_offer_textview);
 		productImage = (ImageView) findViewById(R.id.product_detail_image_imageview);
 		buyNowButton = (Button) findViewById(R.id.product_detail_buynow_button);
 		productRatingBar = (RatingBar) findViewById(R.id.product_detail_ratingbar);
@@ -77,6 +80,9 @@ public class ProductDetailActivity extends Activity {
 		shareFacebookImageView = (ImageView) findViewById(R.id.product_detail_share_facebook_imageview);
 
 		productSpecificationTextView = (TextView) findViewById(R.id.product_detail_specification_textview);
+		cartNumberLayout = (RelativeLayout) findViewById(R.id.activity_cart_number_layout);
+		cartNumberTextView = (TextView) findViewById(R.id.activity_cart_number_textview);
+		cartClickLayout = (RelativeLayout) findViewById(R.id.acitivty_shopping_cart_view_layout);
 
 		loadingProgressbar = (ProgressBar) findViewById(R.id.product_detail_progress_Bar);
 
@@ -94,6 +100,8 @@ public class ProductDetailActivity extends Activity {
 			// setting image
 			new AsycImageLoaderTask(productImage, loadingProgressbar)
 					.execute(productObject.getProductImage());
+
+			productRatingBar.setRating(productObject.getProductRating());
 
 		}
 
@@ -245,6 +253,33 @@ public class ProductDetailActivity extends Activity {
 
 			}
 		});
+
+		cartClickLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(),
+						ShoppingCartActivity.class);
+				startActivity(intent);
+			}
+		});
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		int cartProductCount = CartHelper
+				.fetchProdcutsCount(getApplicationContext());
+		setCartNumber(cartProductCount);
+	}
+
+	private void setCartNumber(int count) {
+		if (count > 0) {
+			cartNumberLayout.setVisibility(View.VISIBLE);
+			cartNumberTextView.setText(String.valueOf(count));
+		} else {
+			cartNumberLayout.setVisibility(View.GONE);
+		}
 	}
 
 	// Async task for fetching specification
@@ -252,8 +287,8 @@ public class ProductDetailActivity extends Activity {
 
 		@Override
 		protected String doInBackground(Void... params) {
-			return Utils.getProductSpectification(getApplicationContext(),
-					productObject.getProductId());
+			return WebServiceHelper.getProductSpectification(
+					getApplicationContext(), productObject.getProductId());
 		}
 
 		@Override

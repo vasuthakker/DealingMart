@@ -12,6 +12,7 @@ import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.adapter.CartProductListAdapter;
 import com.aamani.dealingmart.entities.ProductEntity;
 import com.aamani.dealingmart.helper.CartHelper;
+import com.aamani.dealingmart.interfaces.OnItemCountChangeListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -21,12 +22,13 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
  * @author Vasu
  * 
  */
-public class ShoppingCartActivity extends Activity {
+public class ShoppingCartActivity extends Activity implements
+		OnItemCountChangeListener {
 
 	private ListView cartProductListView;
-	private static TextView totalTextView;
+	private TextView totalTextView;
 	private Button continueShoppingButton;
-	private static int totalValue;
+	private int totalValue = 0;
 
 	private static final int INCREMENT = 0;
 	private static final int DEACREMENT = 1;
@@ -44,20 +46,9 @@ public class ShoppingCartActivity extends Activity {
 
 	}
 
-	public static void changeTotal(int value, int incment_dcment) {
-
-		if (incment_dcment == INCREMENT) {
-			totalValue = totalValue + value;
-		} else {
-			totalValue = totalValue - value;
-		}
-		totalTextView.setText("Total: " + totalValue);
-	}
-
 	@Override
 	public void onResume() {
 		super.onResume();
-		totalValue = 0;
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(ImageLoaderConfiguration
 				.createDefault(getApplicationContext()));
@@ -80,5 +71,16 @@ public class ShoppingCartActivity extends Activity {
 	public void onPause() {
 		super.onPause();
 		imageLoader.destroy();
+	}
+
+	@Override
+	public void changeCount(int count, int inc_dmt) {
+		if (inc_dmt == INCREMENT) {
+			totalValue = totalValue + count;
+		} else {
+			totalValue = totalValue - count;
+		}
+		totalTextView.setText("Total: " + totalValue);
+
 	}
 }

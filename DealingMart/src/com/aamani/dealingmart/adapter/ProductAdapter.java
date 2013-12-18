@@ -6,9 +6,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnLongClickListener;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -30,14 +31,15 @@ public class ProductAdapter extends BaseAdapter {
 	private List<ProductEntity> productList;
 	private ImageLoader imageLoader;
 
-	public ProductAdapter(Activity activity, List<ProductEntity> productList,ImageLoader imageLoader) {
+	public ProductAdapter(Activity activity, List<ProductEntity> productList,
+			ImageLoader imageLoader) {
 		this.activity = activity;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.productList = productList;
 
-		this.imageLoader=imageLoader;
-		
+		this.imageLoader = imageLoader;
+
 	}
 
 	@Override
@@ -78,17 +80,18 @@ public class ProductAdapter extends BaseAdapter {
 
 		final ProductEntity product = productList.get(position);
 
+		offerTextView.setVisibility(View.GONE);
+
 		if (product != null) {
-			productLayout.setOnLongClickListener(new OnLongClickListener() {
+			productLayout.setOnClickListener(new OnClickListener() {
 
 				@Override
-				public boolean onLongClick(View v) {
+				public void onClick(View v) {
 					Intent intent = new Intent(activity,
 							ProductDetailActivity.class);
 					intent.putExtra(DealingMartConstatns.PRODUCT_OBJECT,
 							product);
 					activity.startActivity(intent);
-					return true;
 				}
 			});
 			productNameTextView.setText(product.getProductName());
@@ -113,8 +116,14 @@ public class ProductAdapter extends BaseAdapter {
 				}
 
 			}
+
+			if (product.getProductRating() >= 4) {
+				hotProductImageView.setVisibility(View.VISIBLE);
+			} else {
+				hotProductImageView.setVisibility(View.GONE);
+			}
 		}
-		
+
 		return view;
 
 	}

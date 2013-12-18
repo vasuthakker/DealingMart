@@ -3,7 +3,6 @@ package com.aamani.dealingmart.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

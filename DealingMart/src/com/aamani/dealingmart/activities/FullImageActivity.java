@@ -79,6 +79,9 @@ public class FullImageActivity extends Activity {
 		if (productObject != null) {
 
 			new AsycImageLoaderTask().execute(productObject.getProductImage());
+			productNameTextView.setText(productObject.getProductName());
+			productPriceTextView.setText("Rs:"
+					+ productObject.getProductPrice());
 
 		}
 

@@ -43,6 +43,7 @@
             android:name="com.aamani.dealingmart.activities.ShoppingCartActivity"
             android:label="@string/title_activity_shopping_cart" >
         </activity>
+        <service android:name="com.aamani.dealingmart.services.FetchCategoriesService"></service>
     </application>
 
 </manifest>

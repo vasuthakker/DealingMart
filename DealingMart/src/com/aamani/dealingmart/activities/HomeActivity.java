@@ -103,24 +103,24 @@ public class HomeActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void onCategorySelected(String category,String subCategory) {
+	public void onCategorySelected(String category, String subCategory,
+			String productName) {
 		Log.i(TAG, "category name is " + category);
-		
+
 		HomeMiddleFragment.changeChildFragment(new CategoryViewFragment(),
-				category,subCategory);
-		
+				category, subCategory, productName);
+
 		homeViewPager.setCurrentItem(MIDDLE_PAGE);
-		
+
 		isCategoryViewSelected = true;
 	}
-
 
 	@Override
 	public void onBackPressed() {
 		if (isCategoryViewSelected) {
 			isCategoryViewSelected = false;
 			HomeMiddleFragment.changeChildFragment(new HomeDetailFragment(),
-					null,null);
+					null,null,null);
 			
 
 		} else {

@@ -20,9 +20,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aamani.dealingmart.R;
-import com.aamani.dealingmart.activities.ShoppingCartActivity;
 import com.aamani.dealingmart.entities.ProductEntity;
 import com.aamani.dealingmart.helper.CartHelper;
+import com.aamani.dealingmart.interfaces.OnItemCountChangeListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -36,6 +36,8 @@ public class CartProductListAdapter extends BaseAdapter {
 	private static final int INCREMENT = 0;
 	private static final int DEACREMENT = 1;
 
+	private OnItemCountChangeListener onCountChange;
+
 	private ImageLoader imageLoader;
 
 	public CartProductListAdapter(Activity activity,
@@ -45,6 +47,7 @@ public class CartProductListAdapter extends BaseAdapter {
 		infalter = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.imageLoader = imageLoader;
+		onCountChange = (OnItemCountChangeListener) activity;
 	}
 
 	@Override
@@ -78,10 +81,10 @@ public class CartProductListAdapter extends BaseAdapter {
 				.findViewById(R.id.cart_item_delete_product_layout);
 		final TextView productPriceTextView = (TextView) convertView
 				.findViewById(R.id.cart_item_product_price_textview);
-		ImageView increamentTextView = (ImageView) convertView
-				.findViewById(R.id.cart_item_increment_number_imageview);
-		ImageView deacreamentTextView = (ImageView) convertView
-				.findViewById(R.id.cart_item_deacrement_number_imageview);
+		RelativeLayout increamentLayout = (RelativeLayout) convertView
+				.findViewById(R.id.cart_item_increment_number_layout);
+		RelativeLayout deacreamentLayout = (RelativeLayout) convertView
+				.findViewById(R.id.cart_item_deacrement_number_layout);
 		final ProgressBar loadingProgressBar = (ProgressBar) convertView
 				.findViewById(R.id.cart_item_progressbar);
 
@@ -109,7 +112,7 @@ public class CartProductListAdapter extends BaseAdapter {
 			productCountEditText.setText(String.valueOf(product
 					.getProductCount()));
 
-			increamentTextView.setOnClickListener(new OnClickListener() {
+			increamentLayout.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -118,14 +121,14 @@ public class CartProductListAdapter extends BaseAdapter {
 					if (count < 999) {
 						count++;
 						productCountEditText.setText(String.valueOf(count));
-						ShoppingCartActivity.changeTotal(
-								product.getProductPrice(), INCREMENT);
+						onCountChange.changeCount(product.getProductPrice(),
+								INCREMENT);
 					}
 
 				}
 			});
 
-			deacreamentTextView.setOnClickListener(new OnClickListener() {
+			deacreamentLayout.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -133,8 +136,8 @@ public class CartProductListAdapter extends BaseAdapter {
 							.toString());
 					if (count > 1) {
 						count--;
-						ShoppingCartActivity.changeTotal(
-								product.getProductPrice(), DEACREMENT);
+						onCountChange.changeCount(product.getProductPrice(),
+								DEACREMENT);
 						productCountEditText.setText(String.valueOf(count));
 					}
 
@@ -177,9 +180,10 @@ public class CartProductListAdapter extends BaseAdapter {
 						CartHelper.deleteProduct(activity,
 								product.getProductId());
 						productList.remove(product);
-						ShoppingCartActivity.changeTotal(
-								(product.getProductCount() * product
-										.getProductPrice()), DEACREMENT);
+						onCountChange.changeCount((Integer
+								.valueOf(productCountEditText.getText()
+										.toString()) * product
+								.getProductPrice()), DEACREMENT);
 						notifyDataSetChanged();
 					}
 				}

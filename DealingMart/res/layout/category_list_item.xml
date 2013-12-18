@@ -2,24 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/category_item_blue_textview"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/black"
+        android:layout_height="30dp"
+        android:background="@color/text_blue"
         android:gravity="center"
-        android:text="@string/category_title"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="15sp" >
+    </TextView>
 
     <ListView
-        android:id="@+id/category_listview"
+        android:id="@+id/category_item_sub_category_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp" >
     </ListView>
 
 </LinearLayout>

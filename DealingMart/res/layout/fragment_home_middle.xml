@@ -94,7 +94,7 @@
         android:orientation="vertical" >
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView1"
+            android:id="@+id/search_autocomplete_textview"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="@drawable/search_bg"

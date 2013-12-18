@@ -18,6 +18,7 @@ import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.adapter.CategoryProductListAdapter;
 import com.aamani.dealingmart.common.DealingMartConstatns;
 import com.aamani.dealingmart.entities.ProductEntity;
+import com.aamani.dealingmart.helper.WebServiceHelper;
 import com.aamani.dealingmart.utility.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -38,6 +39,8 @@ public class CategoryViewFragment extends Fragment {
 	private String subCategory;
 	private List<ProductEntity> products;
 	private ImageLoader imageLoader;
+
+	private String productName;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,8 +74,14 @@ public class CategoryViewFragment extends Fragment {
 			category = bundle.getString(DealingMartConstatns.CATEGORY_TITLE);
 			subCategory = bundle
 					.getString(DealingMartConstatns.CATEGORY_SUBCATEGORY);
-			if (category != null) {
-				titleTextView.setText(category);
+			if (subCategory != null) {
+				titleTextView.setText(subCategory);
+			}
+			
+			productName = bundle.getString(DealingMartConstatns.PRODUCT_NAME);
+			if(productName!=null && subCategory==null)
+			{
+				titleTextView.setText("Search:"+productName);
 			}
 		}
 
@@ -82,7 +91,7 @@ public class CategoryViewFragment extends Fragment {
 		// getActivity(), products));
 
 		if (products == null || products.isEmpty()) {
-			new LoadProductTask().execute(category, subCategory);
+			new LoadProductTask().execute(category, subCategory, productName);
 		}
 
 	}
@@ -104,9 +113,10 @@ public class CategoryViewFragment extends Fragment {
 		protected Void doInBackground(String... params) {
 			String category = params[0];
 			String subCategory = params[1];
-			if (category != null && subCategory != null) {
-				products = Utils.getProducts(category, subCategory);
-			}
+			String productName = params[2];
+
+			products = WebServiceHelper.getProducts(category, subCategory,
+					productName);
 
 			return null;
 		}

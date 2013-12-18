@@ -20,9 +20,15 @@ import com.aamani.dealingmart.entities.ProductEntity;
 import com.aamani.dealingmart.utility.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+/**
+ * An adpater for showing the category
+ * 
+ * @author Vasu
+ * 
+ */
 public class CategoryProductListAdapter extends BaseAdapter {
 
-	private static final int LAYOUT_HEIGHT = 140;
+	private static final int LAYOUT_HEIGHT = 150;
 	private Activity activity;
 	private LayoutInflater inflater;
 	private List<Integer> expandedPosList;
@@ -87,30 +93,6 @@ public class CategoryProductListAdapter extends BaseAdapter {
 		if (!expandedPosList.contains(position)) {
 			expandedPosList.add(position);
 		}
-		// } else {
-		// productGridView.setVisibility(View.GONE);
-		// }
-
-		// categoryTitleLayout.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// if (productGridView.getVisibility() == View.GONE) {
-		// productGridView.setVisibility(View.VISIBLE);
-		// plusTextView.setText("-");
-		// productGridView.setAdapter(new ProductAdapter(activity, 3));
-		// if (!expandedPosList.contains(position)) {
-		// expandedPosList.add(position);
-		// }
-		// } else {
-		// productGridView.setVisibility(View.GONE);
-		// plusTextView.setText("+");
-		// if (expandedPosList.contains(position)) {
-		// expandedPosList.remove((Integer) position);
-		// }
-		// }
-		// }
-		// });
 
 		if (expandedPosList.contains(position)) {
 			productGridView.setVisibility(View.VISIBLE);

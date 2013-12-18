@@ -24,7 +24,7 @@ public class DealingMartConstatns {
 	public static final String SUBCATEGORY_OFFICE_DECORE = "Office Decore";
 
 	public static final String SUBCATEGORY_TRAVELLING_BAGS = "Travelling Bags";
-	public static final String SUBCATEGORY_LAPTOP_BAGS = "Laptop Bags";
+	public static final String SUBCATEGORY_LAPTOP_BAGS = "Laptop Bag";
 	public static final String SUBCATEGORY_BAGPACKS = "Bagpacks";
 	public static final String SUBCATEGORY_MOBILE_ACCESSORIES = "Mobile";
 	public static final String SUBCATEGORY_TABLET = "Tablet";
@@ -80,5 +80,7 @@ public class DealingMartConstatns {
 	public static final String CART = "CART_PREFERENCE";
 	public static final String DATABASE_NAME = "DealingMartDatabase";
 	public static final int DATABASE_VERSION = 1;
+
+	public static final String PRODUCT_NAME = "productName";
 
 }

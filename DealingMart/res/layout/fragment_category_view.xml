@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/background_grey"
-    android:orientation="vertical"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp" >
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/category_title_textview"

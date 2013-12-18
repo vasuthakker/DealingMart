@@ -77,26 +77,6 @@
             android:text="1" >
         </EditText>
 
-        <ImageView
-            android:id="@+id/cart_item_increment_number_imageview"
-            android:layout_width="30dp"
-            android:layout_height="20dp"
-            android:layout_above="@+id/cart_item_productcount_edittext"
-            android:layout_alignLeft="@+id/cart_item_productcount_edittext"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/up_arrow" />
-
-        <ImageView
-            android:id="@+id/cart_item_deacrement_number_imageview"
-            android:layout_width="30dp"
-            android:layout_height="20dp"
-            android:layout_alignLeft="@+id/cart_item_increment_number_imageview"
-            android:layout_below="@+id/cart_item_productcount_edittext"
-            android:layout_marginTop="5dp"
-            android:rotation="180"
-            android:src="@drawable/up_arrow" />
-
         <TextView
             android:id="@+id/cart_item_product_name_textview"
             android:layout_width="wrap_content"
@@ -115,6 +95,41 @@
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/black" />
+
+        <RelativeLayout
+            android:id="@+id/cart_item_increment_number_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/cart_item_productcount_edittext"
+            android:layout_alignLeft="@+id/cart_item_productcount_edittext"
+            android:layout_alignRight="@+id/cart_item_productcount_edittext"
+            android:layout_marginBottom="5dp" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/up_arrow" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/cart_item_deacrement_number_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignLeft="@+id/cart_item_productcount_edittext"
+            android:layout_alignRight="@+id/cart_item_productcount_edittext"
+            android:layout_below="@+id/cart_item_productcount_edittext"
+            android:layout_marginTop="5dp" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:rotation="180"
+                android:src="@drawable/up_arrow" />
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </LinearLayout>

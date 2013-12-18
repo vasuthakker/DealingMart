@@ -139,7 +139,8 @@
                 android:layout_height="147dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/box_bg"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:visibility="gone" >
 
                 <TextView
                     android:id="@+id/textView2"
