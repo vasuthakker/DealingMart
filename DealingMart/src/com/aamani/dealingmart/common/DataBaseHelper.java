@@ -90,4 +90,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return cursor;
 	}
 
+	public static void truncateOrderTable(Context context) {
+		SQLiteDatabase db = new DataBaseHelper(context).getWritableDatabase();
+		db.execSQL("DROP TABLE DEALINGMART_CART");
+		List<String> queries = TableCreationQueries.getCreateTableQueries();
+		db.execSQL(queries.get(0));
+
+	}
+
 }

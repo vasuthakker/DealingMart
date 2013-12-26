@@ -28,7 +28,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public class CategoryProductListAdapter extends BaseAdapter {
 
-	private static final int LAYOUT_HEIGHT = 150;
+	private static final int LAYOUT_HEIGHT = 160;
 	private Activity activity;
 	private LayoutInflater inflater;
 	private List<Integer> expandedPosList;

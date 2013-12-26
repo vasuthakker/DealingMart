@@ -3,10 +3,14 @@ package com.aamani.dealingmart.activities;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.adapter.CartProductListAdapter;
@@ -31,9 +35,10 @@ public class ShoppingCartActivity extends Activity implements
 	private int totalValue = 0;
 
 	private static final int INCREMENT = 0;
-	private static final int DEACREMENT = 1;
 
 	private ImageLoader imageLoader;
+
+	private List<ProductEntity> cartProducts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +49,40 @@ public class ShoppingCartActivity extends Activity implements
 		continueShoppingButton = (Button) findViewById(R.id.cart_continue_button);
 		totalTextView = (TextView) findViewById(R.id.cart_total_textview);
 
+		continueShoppingButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				checkCartAndContinue();
+			}
+		});
+
+	}
+
+	private void checkCartAndContinue() {
+		if (cartProducts.size() > 0) {
+			Intent intent = new Intent(getApplicationContext(),
+					LoginActivity.class);
+			startActivity(intent);
+		} else {
+			Toast.makeText(getApplicationContext(),
+					getString(R.string.no_product_in_the_cart),
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		totalValue = 0;
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(ImageLoaderConfiguration
 				.createDefault(getApplicationContext()));
-		List<ProductEntity> cartProducts = CartHelper
-				.fetchProducts(getApplicationContext());
+		cartProducts = CartHelper.fetchProducts(getApplicationContext());
 
 		cartProductListView.setAdapter(new CartProductListAdapter(this,
-				cartProducts, imageLoader));
+				cartProducts, imageLoader, true));
 
 		for (ProductEntity product : cartProducts) {
 
@@ -81,6 +107,5 @@ public class ShoppingCartActivity extends Activity implements
 			totalValue = totalValue - count;
 		}
 		totalTextView.setText("Total: " + totalValue);
-
 	}
 }

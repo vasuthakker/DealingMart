@@ -101,7 +101,7 @@ public class CartHelper {
 	 * @param context
 	 * @return
 	 */
-	public static List<ProductEntity> fetchProdcuts(Context context,
+	public static List<ProductEntity> fetchProducts(Context context,
 			String selection, String[] selectionArgs, String groupBy,
 			String having, String orderBy) {
 		List<ProductEntity> products = new ArrayList<ProductEntity>();
@@ -176,12 +176,21 @@ public class CartHelper {
 	 * @param activity
 	 * @param productId
 	 */
-	public static void deleteProduct(Context context, String productId) {
+	public static void deleteProduct(Context context, String productId,
+			boolean deleteSingle) {
 		DataBaseHelper dbHelper = new DataBaseHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		try {
-			db.delete(TABLE_NAME, KEY_PRODUCT_ID + "=?",
-					new String[] { productId });
+			if (!deleteSingle) {
+				db.delete(TABLE_NAME, KEY_PRODUCT_ID + "=?",
+						new String[] { productId });
+			} else {
+				int orderId = fetchProducts(context, KEY_PRODUCT_ID + "=?",
+						new String[] { productId }, null, null, null).get(0)
+						.getId();
+				db.delete(TABLE_NAME, KEY_ID + "=?",
+						new String[] { String.valueOf(orderId) });
+			}
 		} catch (SQLiteException e) {
 			Log.e(TAG, "SQLiteException", e);
 		} catch (IllegalStateException e) {

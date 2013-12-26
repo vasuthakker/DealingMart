@@ -12,6 +12,7 @@ public class ProductEntity implements Serializable {
 	private int productPrice;
 	private int productCount;
 	private int productRating;
+	private String brandName;
 
 	public String getProductName() {
 		return productName;
@@ -67,6 +68,19 @@ public class ProductEntity implements Serializable {
 
 	public void setProductRating(int productRating) {
 		this.productRating = productRating;
+	}
+
+	@Override
+	public String toString() {
+		return productName;
+	}
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
 
 }

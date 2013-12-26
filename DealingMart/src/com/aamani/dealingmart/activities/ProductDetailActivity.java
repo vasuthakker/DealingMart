@@ -53,11 +53,14 @@ public class ProductDetailActivity extends Activity {
 
 	private ProductEntity productObject;
 
+
 	private ProgressBar loadingProgressbar;
 
 	private RelativeLayout cartNumberLayout;
 	private TextView cartNumberTextView;
 	private RelativeLayout cartClickLayout;
+
+	private StringBuilder productDetailInfo = new StringBuilder();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,7 @@ public class ProductDetailActivity extends Activity {
 		cartClickLayout = (RelativeLayout) findViewById(R.id.acitivty_shopping_cart_view_layout);
 
 		loadingProgressbar = (ProgressBar) findViewById(R.id.product_detail_progress_Bar);
+		
 
 		// getting product object from the intent
 		productObject = (ProductEntity) getIntent().getSerializableExtra(
@@ -103,6 +107,13 @@ public class ProductDetailActivity extends Activity {
 
 			productRatingBar.setRating(productObject.getProductRating());
 
+			productDetailInfo.append(getString(
+					R.string.product__info_detail_text).replace("*",
+					productObject.getProductName()).replace(
+					"$",
+					getString(R.string.product_url).replace("$",
+							productObject.getProductId())));
+
 		}
 
 		shareSMSImageView.setOnClickListener(new OnClickListener() {
@@ -112,10 +123,7 @@ public class ProductDetailActivity extends Activity {
 				Intent shareIntent = new Intent(Intent.ACTION_VIEW);
 
 				shareIntent.setType("vnd.android-dir/mms-sms");
-				shareIntent.putExtra(
-						"sms_body",
-						getString(R.string.product_share_message).replace("$",
-								"Note 3"));
+				shareIntent.putExtra("sms_body", productDetailInfo.toString());
 
 				startActivity(Intent.createChooser(shareIntent,
 						SHARE_PRODUCT_TITLE));
@@ -132,10 +140,8 @@ public class ProductDetailActivity extends Activity {
 				Intent shareIntent = new Intent(Intent.ACTION_SEND);
 				shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
 						getString(R.string.email_subject));
-				shareIntent.putExtra(
-						android.content.Intent.EXTRA_TEXT,
-						getString(R.string.product_share_message).replace("$",
-								"Note 3"));
+				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+						productDetailInfo.toString());
 
 				shareIntent.setType("message/rfc822");
 
@@ -159,8 +165,7 @@ public class ProductDetailActivity extends Activity {
 					whatsappIntent.setPackage(WHATSAPP_PACKAGE);
 					if (whatsappIntent != null) {
 						whatsappIntent.putExtra(Intent.EXTRA_TEXT,
-								getString(R.string.product_share_message)
-										.replace("$", "Note 3"));//
+								productDetailInfo.toString());//
 						startActivity(Intent.createChooser(whatsappIntent,
 								SHARE_PRODUCT_TITLE));
 					}
@@ -185,8 +190,7 @@ public class ProductDetailActivity extends Activity {
 					twitterIntent.setPackage(TWITTER_PACKAGE);
 					if (twitterIntent != null) {
 						twitterIntent.putExtra(Intent.EXTRA_TEXT,
-								getString(R.string.product_share_message)
-										.replace("$", "Note 3"));//
+								productDetailInfo.toString());//
 						startActivity(Intent.createChooser(twitterIntent,
 								SHARE_PRODUCT_TITLE));
 					}
@@ -212,8 +216,7 @@ public class ProductDetailActivity extends Activity {
 					facebookIntent.setPackage(FACEBOOK_PACKAGE);
 					if (facebookIntent != null) {
 						facebookIntent.putExtra(Intent.EXTRA_TEXT,
-								getString(R.string.product_share_message)
-										.replace("$", "Note 3"));//
+								productDetailInfo.toString());//
 						startActivity(Intent.createChooser(facebookIntent,
 								SHARE_PRODUCT_TITLE));
 					}

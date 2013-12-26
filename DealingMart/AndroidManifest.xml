@@ -11,10 +11,20 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="com.aamani.dealingmart.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.aamani.dealingmart.permission.C2D_MESSAGE" />
+    
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/logo_final"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
@@ -33,17 +43,53 @@
         </activity>
         <activity
             android:name="com.aamani.dealingmart.activities.ProductDetailActivity"
-            android:label="@string/title_activity_product_detail" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.aamani.dealingmart.activities.FullImageActivity"
-            android:label="@string/title_activity_full_image" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.aamani.dealingmart.activities.ShoppingCartActivity"
-            android:label="@string/title_activity_shopping_cart" >
+            android:screenOrientation="portrait" >
         </activity>
-        <service android:name="com.aamani.dealingmart.services.FetchCategoriesService"></service>
+
+        <service android:name="com.aamani.dealingmart.services.FetchCategoriesService" >
+        </service>
+
+        <activity
+            android:name="com.aamani.dealingmart.activities.LoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.aamani.dealingmart.activities.ShippingAddressActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.aamani.dealingmart.activities.OrderSummaryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.aamani.dealingmart.activities.PaymentActivity"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
+        <service android:name="com.aamani.dealingmart.services.GcmRegistrationService"></service>
+        
+         <receiver
+            android:name="com.aamani.dealingmart.receiver.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.aamani.dealingmart" />
+            </intent-filter>
+        </receiver>
+
+    
+
+    
+    
+
+    <meta-data android:name="com.crashlytics.ApiKey" android:value="76f84191b2211b9ae292e972235130da8bc5812c"/>
     </application>
 
 </manifest>

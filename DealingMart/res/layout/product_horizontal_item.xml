@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/product_item_layout"
         android:layout_width="wrap_content"
-        android:layout_height="140dp"
+        android:layout_height="150dp"
         android:layout_margin="2dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/box_bg" >

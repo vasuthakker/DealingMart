@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -94,7 +93,11 @@ public class ProductAdapter extends BaseAdapter {
 					activity.startActivity(intent);
 				}
 			});
-			productNameTextView.setText(product.getProductName());
+			String productName = product.getProductName();
+			if (productName.length() > 40) {
+				productName = productName.substring(0, 40) + "...";
+			}
+			productNameTextView.setText(productName);
 			productPriceTextView.setText("Rs:" + product.getProductPrice());
 
 			if (productImageView != null && product.getProductImage() != null

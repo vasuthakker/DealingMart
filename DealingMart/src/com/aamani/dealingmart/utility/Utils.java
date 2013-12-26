@@ -4,17 +4,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Pattern;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.StrictMode;
+import android.provider.Settings.Secure;
 import android.util.Log;
+import android.util.Patterns;
 
 import com.aamani.dealingmart.common.DealingMartConstatns;
 
+/**
+ * Utility class
+ * 
+ * @author Vasu
+ * 
+ */
 public class Utils {
 
 	static String subCategory = "allProd";
@@ -84,6 +95,37 @@ public class Utils {
 		SharedPreferences preference = context.getSharedPreferences(
 				DealingMartConstatns.SHARED_PREFERENCE, Context.MODE_PRIVATE);
 		return preference.getString(key, null);
+	}
+
+	/**
+	 * Get Unique id for device
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static String getUniquId(Context context) {
+		// Getting a unique device id
+		return Secure
+				.getString(context.getContentResolver(), Secure.ANDROID_ID);
+	}
+
+	/**
+	 * Method for getting google account
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static String getGoogleAccount(Context context) {
+		String googleAccount = null;
+		Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
+		Account[] accounts = AccountManager.get(context).getAccounts();
+		for (Account account : accounts) {
+			if (emailPattern.matcher(account.name).matches()
+					&& account.type.equals("com.google")) {
+				googleAccount = account.name;
+			}
+		}
+		return googleAccount;
 	}
 
 }

@@ -79,7 +79,11 @@ public class FullImageActivity extends Activity {
 		if (productObject != null) {
 
 			new AsycImageLoaderTask().execute(productObject.getProductImage());
-			productNameTextView.setText(productObject.getProductName());
+			String productName = productObject.getProductName();
+			if (productName.length() > 25) {
+				productName = productName.substring(0, 25) + "...";
+			}
+			productNameTextView.setText(productName);
 			productPriceTextView.setText("Rs:"
 					+ productObject.getProductPrice());
 

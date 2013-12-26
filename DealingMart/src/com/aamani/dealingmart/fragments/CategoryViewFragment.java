@@ -116,7 +116,7 @@ public class CategoryViewFragment extends Fragment {
 			String productName = params[2];
 
 			products = WebServiceHelper.getProducts(category, subCategory,
-					productName);
+					productName,0);
 
 			return null;
 		}

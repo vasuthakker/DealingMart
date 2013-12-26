@@ -82,5 +82,12 @@ public class DealingMartConstatns {
 	public static final int DATABASE_VERSION = 1;
 
 	public static final String PRODUCT_NAME = "productName";
+	public static final String EMAIL_ID = "EMAIL_ID";
+	public static final String SHIP_ID = "SHIP_ID";
+	public static final String SESSION_ID = "SESSION_ID";
+
+	public static final String GCM_SENDER_ID = "788946731401";
+
+	public static final String GCM_ID = "GCM_ID";
 
 }

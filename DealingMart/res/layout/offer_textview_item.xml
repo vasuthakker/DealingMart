@@ -2,15 +2,17 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:layout_marginTop="3dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
     android:background="@color/white"
     android:ellipsize="marquee"
     android:fadingEdge="horizontal"
-    android:gravity="center"
+    android:gravity="left|center_vertical"
     android:lines="1"
     android:marqueeRepeatLimit="marquee_forever"
     android:scrollHorizontally="true"
-    android:textColor="@color/black"
-    android:textSize="15sp" >
+    android:textColor="@color/text_blue"
+    android:textSize="15sp"
+    android:textStyle="italic" >
 
 </TextView>
