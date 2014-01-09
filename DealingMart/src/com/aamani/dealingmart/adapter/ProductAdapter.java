@@ -23,7 +23,12 @@ import com.aamani.dealingmart.entities.ProductEntity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
-public class ProductAdapter extends BaseAdapter {
+/**
+ * Adapter class to display products
+ * @author Vasu
+ *
+ */
+ class ProductAdapter extends BaseAdapter {
 
 	private Activity activity;
 	private LayoutInflater inflater;

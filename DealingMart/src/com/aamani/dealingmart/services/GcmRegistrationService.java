@@ -11,6 +11,11 @@ import com.aamani.dealingmart.helper.WebServiceHelper;
 import com.aamani.dealingmart.utility.Utils;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+/**
+ * Service for gcm registration service
+ * @author Vasu
+ *
+ */
 public class GcmRegistrationService extends IntentService {
 
 	private static final String TAG = "GcmRegistrationService";

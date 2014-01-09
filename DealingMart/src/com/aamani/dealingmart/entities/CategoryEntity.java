@@ -1,5 +1,10 @@
 package com.aamani.dealingmart.entities;
 
+/**
+ * Category entity
+ * @author Vasu
+ *
+ */
 public class CategoryEntity {
 
 	private int id;

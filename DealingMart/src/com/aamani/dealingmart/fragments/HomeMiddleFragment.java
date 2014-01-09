@@ -115,6 +115,7 @@ public class HomeMiddleFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+				
 				Intent intent = new Intent(getActivity(),
 						ShoppingCartActivity.class);
 				startActivity(intent);

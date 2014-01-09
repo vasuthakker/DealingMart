@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -23,6 +22,12 @@ import com.aamani.dealingmart.entities.SubCategoryEntity;
 import com.aamani.dealingmart.interfaces.OnCategoryItemSelected;
 import com.aamani.dealingmart.utility.Utils;
 
+/**
+ * Adapter to display category list
+ * 
+ * @author Vasu
+ * 
+ */
 public class CategoryListAdapter extends BaseAdapter {
 
 	private Activity activity;
@@ -88,7 +93,8 @@ public class CategoryListAdapter extends BaseAdapter {
 								int position, long id) {
 							onCategorySelectedListener.onCategorySelected(
 									category.getCategory(),
-									subCategory.get(position).getSubCategory(),null);
+									subCategory.get(position).getSubCategory(),
+									null);
 
 						}
 					});

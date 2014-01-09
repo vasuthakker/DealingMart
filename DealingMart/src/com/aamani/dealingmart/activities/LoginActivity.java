@@ -23,6 +23,11 @@ import com.aamani.dealingmart.common.DealingMartConstatns;
 import com.aamani.dealingmart.helper.WebServiceHelper;
 import com.aamani.dealingmart.utility.Utils;
 
+/**
+ * Activity for guest / user login
+ * @author Vasu
+ *
+ */
 public class LoginActivity extends Activity {
 
 	private Button guestLoginButton;

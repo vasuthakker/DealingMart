@@ -14,13 +14,13 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <permission
         android:name="com.aamani.dealingmart.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.aamani.dealingmart.permission.C2D_MESSAGE" />
-    
 
     <application
         android:allowBackup="true"
@@ -73,23 +73,28 @@
             android:name="com.aamani.dealingmart.activities.PaymentActivity"
             android:screenOrientation="sensorLandscape" >
         </activity>
-        <service android:name="com.aamani.dealingmart.services.GcmRegistrationService"></service>
-        
-         <receiver
+
+        <service android:name="com.aamani.dealingmart.services.GcmRegistrationService" >
+        </service>
+
+        <receiver
             android:name="com.aamani.dealingmart.receiver.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.aamani.dealingmart" />
             </intent-filter>
         </receiver>
 
-    
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="76f84191b2211b9ae292e972235130da8bc5812c" />
 
-    
-    
-
-    <meta-data android:name="com.crashlytics.ApiKey" android:value="76f84191b2211b9ae292e972235130da8bc5812c"/>
+        <activity
+            android:name="com.aamani.dealingmart.activities.DisplayContactActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

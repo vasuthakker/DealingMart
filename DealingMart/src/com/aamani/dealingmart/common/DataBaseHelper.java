@@ -12,6 +12,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Helper class for database
+ * @author Vasu
+ *
+ */
 public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final String TAG = "DataBaseHelper";

@@ -21,6 +21,11 @@ import com.aamani.dealingmart.fragments.HomeMiddleFragment;
 import com.aamani.dealingmart.helper.CartHelper;
 import com.aamani.dealingmart.utility.Utils;
 
+/**
+ * Activity to display full image
+ * @author Vasu
+ *
+ */
 public class FullImageActivity extends Activity {
 
 	private LinearLayout productDetailLayout;

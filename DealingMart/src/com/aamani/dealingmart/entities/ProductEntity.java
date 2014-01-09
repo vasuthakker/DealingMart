@@ -2,6 +2,13 @@ package com.aamani.dealingmart.entities;
 
 import java.io.Serializable;
 
+import com.aamani.dealingmart.common.DealingMartConstatns;
+
+/**
+ * Product entity
+ * @author Vasu
+ *
+ */
 @SuppressWarnings("serial")
 public class ProductEntity implements Serializable {
 
@@ -9,10 +16,13 @@ public class ProductEntity implements Serializable {
 	private String productId;
 	private String productName;
 	private String productImage;
-	private int productPrice;
+	private float productPrice;
 	private int productCount;
 	private int productRating;
 	private String brandName;
+	private float productDiscount;
+	private int isPushedInCart=DealingMartConstatns.STATUS_INACTIVE;
+	private int attributeId;
 
 	public String getProductName() {
 		return productName;
@@ -30,13 +40,6 @@ public class ProductEntity implements Serializable {
 		this.productImage = productImage;
 	}
 
-	public int getProductPrice() {
-		return productPrice;
-	}
-
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
-	}
 
 	public String getProductId() {
 		return productId;
@@ -82,5 +85,39 @@ public class ProductEntity implements Serializable {
 	public void setBrandName(String brandName) {
 		this.brandName = brandName;
 	}
+
+	public float getProductDiscount() {
+		return productDiscount;
+	}
+
+	public void setProductDiscount(float productDiscount) {
+		this.productDiscount = productDiscount;
+	}
+
+	public float getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(float productPrice) {
+		this.productPrice = productPrice;
+	}
+
+	public int getIsPushedInCart() {
+		return isPushedInCart;
+	}
+
+	public void setIsPushedInCart(int isPushedInCart) {
+		this.isPushedInCart = isPushedInCart;
+	}
+
+	public int getAttributeId() {
+		return attributeId;
+	}
+
+	public void setAttributeId(int attributeId) {
+		this.attributeId = attributeId;
+	}
+
+
 
 }

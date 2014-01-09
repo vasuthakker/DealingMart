@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -68,8 +66,6 @@ public class OrderSummaryActivity extends Activity {
 			}
 		});
 
-		
-
 	}
 
 	private void pushProductsToServer() {
@@ -84,8 +80,8 @@ public class OrderSummaryActivity extends Activity {
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(ImageLoaderConfiguration
 				.createDefault(getApplicationContext()));
-		
-		orders = CartHelper.fetchProducts(getApplicationContext());
+
+		orders = CartHelper.fetchProducts(getApplicationContext(), false);
 
 		int totalAmount = 0;
 		for (ProductEntity product : orders) {
@@ -123,12 +119,18 @@ public class OrderSummaryActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			boolean isProductInserted = true;
-			orders=CartHelper.fetchProducts(getApplicationContext());
-			for (final ProductEntity product : orders) {
-				isProductInserted = WebServiceHelper.pushProductFromCart(
-						sessionId, product);
+			orders = CartHelper.fetchProducts(getApplicationContext(), true);
+			for (ProductEntity product : orders) {
+				if (product.getIsPushedInCart() == DealingMartConstatns.STATUS_INACTIVE) {
+					isProductInserted = WebServiceHelper.pushProductFromCart(
+							sessionId, product);
+				}
 				if (!isProductInserted) {
 					break;
+				} else {
+					product.setIsPushedInCart(DealingMartConstatns.STATUS_ACTIVE);
+					CartHelper.updatePorductToCart(getApplicationContext(),
+							product);
 				}
 			}
 			return isProductInserted;

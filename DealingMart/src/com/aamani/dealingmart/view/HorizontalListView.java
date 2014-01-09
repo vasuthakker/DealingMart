@@ -15,6 +15,11 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.Scroller;
 
+/**
+ * Custom horizontal listview
+ * @author Vasu
+ *
+ */
 public class HorizontalListView extends AdapterView<ListAdapter> {
 
 	public boolean mAlwaysOverrideTouch = true;

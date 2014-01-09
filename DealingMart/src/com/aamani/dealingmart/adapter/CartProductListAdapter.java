@@ -24,6 +24,11 @@ import com.aamani.dealingmart.interfaces.OnItemCountChangeListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
+/**
+ * An adapter for displaying products on cart
+ * @author Vasu
+ *
+ */
 public class CartProductListAdapter extends BaseAdapter {
 
 	protected static final String TAG = "CartProductListAdapter";

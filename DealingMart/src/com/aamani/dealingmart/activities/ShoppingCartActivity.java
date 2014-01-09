@@ -32,7 +32,7 @@ public class ShoppingCartActivity extends Activity implements
 	private ListView cartProductListView;
 	private TextView totalTextView;
 	private Button continueShoppingButton;
-	private int totalValue = 0;
+	private float totalValue = 0f;
 
 	private static final int INCREMENT = 0;
 
@@ -79,7 +79,7 @@ public class ShoppingCartActivity extends Activity implements
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(ImageLoaderConfiguration
 				.createDefault(getApplicationContext()));
-		cartProducts = CartHelper.fetchProducts(getApplicationContext());
+		cartProducts = CartHelper.fetchProducts(getApplicationContext(),false);
 
 		cartProductListView.setAdapter(new CartProductListAdapter(this,
 				cartProducts, imageLoader, true));
@@ -100,11 +100,11 @@ public class ShoppingCartActivity extends Activity implements
 	}
 
 	@Override
-	public void changeCount(int count, int inc_dmt) {
+	public void changeCount(float price, int inc_dmt) {
 		if (inc_dmt == INCREMENT) {
-			totalValue = totalValue + count;
+			totalValue = totalValue + price;
 		} else {
-			totalValue = totalValue - count;
+			totalValue = totalValue - price;
 		}
 		totalTextView.setText("Total: " + totalValue);
 	}

@@ -21,21 +21,23 @@ import com.aamani.dealingmart.entities.ProductEntity;
  * 
  */
 public class CartHelper {
-
+	
 	private static final String TABLE_NAME = "DEALINGMART_CART";
-
+	
 	public static final String KEY_ID = "_ID";
 	public static final String KEY_PRODUCT_ID = "PRODUCT_ID";
 	public static final String KEY_PRODUCT_NAME = "PRODUCT_NAME";
 	public static final String KEY_PRODUCT_IMAGE = "PRODUCT_IMAGE";
 	public static final String KEY_PRODUCT_PRICE = "PRODUCT_PRICE";
 	public static final String KEY_PRODUCT_COUNT = "PRODUCT_COUNT";
-
+	public static final String KEY_ATTRIBUTE_ID = "ATTRIBUTE_ID";
+	public static final String KEY_IS_PUSHED = "IS_PUSHED";
+	
 	private static final String TAG = "CartHelper";
-
-	private static final String SELECT_QUERY_WITH_COUNT = "SELECT *,COUNT(*)  AS PRODUCT_COUNT FROM "
-			+ TABLE_NAME + " GROUP BY " + KEY_PRODUCT_ID;
-
+	
+	private static final String SELECT_QUERY_WITH_COUNT = "SELECT *,COUNT("
+			+ KEY_PRODUCT_ID + ")  AS PRODUCT_COUNT FROM " + TABLE_NAME;
+	
 	/**
 	 * Method to insert products into cart
 	 */
@@ -45,13 +47,35 @@ public class CartHelper {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		try {
 			db.insert(TABLE_NAME, null, getContentValueFromEntity(product));
-		} catch (SQLiteException e) {
+		}
+		catch (SQLiteException e) {
 			Log.e(TAG, "SQLiteException", e);
-		} finally {
+		}
+		finally {
 			db.close();
 		}
 	}
-
+	
+	/**
+	 * Method to update products into cart
+	 */
+	public static void updatePorductToCart(Context context,
+			ProductEntity product) {
+		DataBaseHelper dbHelper = new DataBaseHelper(context);
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		try {
+			db.update(TABLE_NAME, getContentValueFromEntity(product),
+					KEY_PRODUCT_ID + "=?",
+					new String[] { product.getProductId() });
+		}
+		catch (SQLiteException e) {
+			Log.e(TAG, "SQLiteException", e);
+		}
+		finally {
+			db.close();
+		}
+	}
+	
 	// get content values from product entity
 	private static ContentValues getContentValueFromEntity(ProductEntity product) {
 		ContentValues cv = new ContentValues();
@@ -59,21 +83,29 @@ public class CartHelper {
 		cv.put(KEY_PRODUCT_NAME, product.getProductName());
 		cv.put(KEY_PRODUCT_IMAGE, product.getProductImage());
 		cv.put(KEY_PRODUCT_PRICE, product.getProductPrice());
+		cv.put(KEY_IS_PUSHED, product.getIsPushedInCart());
+		cv.put(KEY_ATTRIBUTE_ID, product.getAttributeId());
 		return cv;
 	}
-
+	
 	/**
 	 * Fetch products
 	 * 
 	 * @param context
 	 * @return
 	 */
-	public static List<ProductEntity> fetchProducts(Context context) {
+	public static List<ProductEntity> fetchProducts(Context context,
+			boolean isOnlyPushedSelected) {
 		List<ProductEntity> products = new ArrayList<ProductEntity>();
 		DataBaseHelper dbHelper = new DataBaseHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		try {
-			Cursor cursor = db.rawQuery(SELECT_QUERY_WITH_COUNT, null);
+			StringBuilder sbQuery = new StringBuilder(SELECT_QUERY_WITH_COUNT);
+			if (isOnlyPushedSelected) {
+				sbQuery.append(" WHERE " + KEY_IS_PUSHED + "=0");
+			}
+			sbQuery.append(" GROUP BY " + KEY_PRODUCT_ID);
+			Cursor cursor = db.rawQuery(sbQuery.toString(), null);
 			ProductEntity product = null;
 			while (cursor.moveToNext()) {
 				product = new ProductEntity();
@@ -83,18 +115,22 @@ public class CartHelper {
 				products.add(product);
 			}
 			cursor.close();
-		} catch (SQLiteException e) {
+		}
+		catch (SQLiteException e) {
 			Log.e(TAG, "SQLiteException", e);
-		} catch (CursorIndexOutOfBoundsException e) {
+		}
+		catch (CursorIndexOutOfBoundsException e) {
 			Log.e(TAG, "CursorIndexOutOfBoundsException", e);
-		} catch (IllegalStateException e) {
+		}
+		catch (IllegalStateException e) {
 			Log.e(TAG, "IllegalStateException", e);
-		} finally {
+		}
+		finally {
 			db.close();
 		}
 		return products;
 	}
-
+	
 	/**
 	 * Fetch products
 	 * 
@@ -114,18 +150,22 @@ public class CartHelper {
 				products.add(getEntityFromCursor(cursor));
 			}
 			cursor.close();
-		} catch (SQLiteException e) {
+		}
+		catch (SQLiteException e) {
 			Log.e(TAG, "SQLiteException", e);
-		} catch (CursorIndexOutOfBoundsException e) {
+		}
+		catch (CursorIndexOutOfBoundsException e) {
 			Log.e(TAG, "CursorIndexOutOfBoundsException", e);
-		} catch (IllegalStateException e) {
+		}
+		catch (IllegalStateException e) {
 			Log.e(TAG, "IllegalStateException", e);
-		} finally {
+		}
+		finally {
 			db.close();
 		}
 		return products;
 	}
-
+	
 	/**
 	 * Fetch products
 	 * 
@@ -143,18 +183,22 @@ public class CartHelper {
 				productCount = cursor.getCount();
 			}
 			cursor.close();
-		} catch (SQLiteException e) {
+		}
+		catch (SQLiteException e) {
 			Log.e(TAG, "SQLiteException", e);
-		} catch (CursorIndexOutOfBoundsException e) {
+		}
+		catch (CursorIndexOutOfBoundsException e) {
 			Log.e(TAG, "CursorIndexOutOfBoundsException", e);
-		} catch (IllegalStateException e) {
+		}
+		catch (IllegalStateException e) {
 			Log.e(TAG, "IllegalStateException", e);
-		} finally {
+		}
+		finally {
 			db.close();
 		}
 		return productCount;
 	}
-
+	
 	// get entity from cursor
 	private static ProductEntity getEntityFromCursor(Cursor cursor) {
 		ProductEntity product = new ProductEntity();
@@ -167,9 +211,13 @@ public class CartHelper {
 				.getColumnIndex(KEY_PRODUCT_PRICE)));
 		product.setProductImage(cursor.getString(cursor
 				.getColumnIndex(KEY_PRODUCT_IMAGE)));
+		product.setIsPushedInCart(cursor.getInt(cursor
+				.getColumnIndex(KEY_IS_PUSHED)));
+		product.setAttributeId(cursor.getInt(cursor
+				.getColumnIndex(KEY_ATTRIBUTE_ID)));
 		return product;
 	}
-
+	
 	/**
 	 * Method for deleting a product
 	 * 
@@ -184,20 +232,24 @@ public class CartHelper {
 			if (!deleteSingle) {
 				db.delete(TABLE_NAME, KEY_PRODUCT_ID + "=?",
 						new String[] { productId });
-			} else {
+			}
+			else {
 				int orderId = fetchProducts(context, KEY_PRODUCT_ID + "=?",
 						new String[] { productId }, null, null, null).get(0)
 						.getId();
 				db.delete(TABLE_NAME, KEY_ID + "=?",
 						new String[] { String.valueOf(orderId) });
 			}
-		} catch (SQLiteException e) {
+		}
+		catch (SQLiteException e) {
 			Log.e(TAG, "SQLiteException", e);
-		} catch (IllegalStateException e) {
+		}
+		catch (IllegalStateException e) {
 			Log.e(TAG, "IllegalStateException", e);
-		} finally {
+		}
+		finally {
 			db.close();
 		}
-
+		
 	}
 }

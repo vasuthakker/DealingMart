@@ -28,7 +28,7 @@ import com.aamani.dealingmart.helper.WebServiceHelper;
  * 
  */
 public class ShippingAddressActivity extends Activity {
-
+	
 	private EditText nameEditText;
 	private EditText phoneEditText;
 	private EditText emailEditText;
@@ -42,16 +42,16 @@ public class ShippingAddressActivity extends Activity {
 	private String[] countryList;
 	private String sessionId;
 	private int shipId;
-
+	
 	private LinearLayout loadingLayout;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shipping_address);
-
+		
 		countrySpinner = (Spinner) findViewById(R.id.country_list_spinnner);
-
+		
 		nameEditText = (EditText) findViewById(R.id.shipping_name_edittext);
 		phoneEditText = (EditText) findViewById(R.id.shipping_phone_edittext);
 		emailEditText = (EditText) findViewById(R.id.shipping_email_edittext);
@@ -61,54 +61,54 @@ public class ShippingAddressActivity extends Activity {
 		pincodeEdtiText = (EditText) findViewById(R.id.shipping_pincode_edittext);
 		submitButton = (Button) findViewById(R.id.shipping_submit_buton);
 		loadingLayout = (LinearLayout) findViewById(R.id.shipping_activity_loading_layout);
-
+		
 		submitButton.setOnClickListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
 				insertShippingDetail();
 			}
-
+			
 		});
-
+		
 		countryList = getResources().getStringArray(R.array.country_list);
-
+		
 		// intent data
 		emailId = getIntent().getStringExtra(DealingMartConstatns.EMAIL_ID);
 		sessionId = getIntent().getStringExtra(DealingMartConstatns.SESSION_ID);
-
+		
 		if (emailId != null) {
 			new CheckShippingAddressAsync().execute(emailId);
 		}
-
+		
 	}
-
+	
 	private class CheckShippingAddressAsync extends
 			AsyncTask<String, Void, ShippingAddressEntity> {
-
-		private ShippingAddressEntity address;
-
+		
+		
 		@Override
 		public void onPreExecute() {
 			loadingLayout.setVisibility(View.VISIBLE);
 		}
-
+		
 		@Override
 		protected ShippingAddressEntity doInBackground(String... params) {
-			address = WebServiceHelper.checkShippingAddress(
-					getApplicationContext(), params[0]);
+			ShippingAddressEntity address = WebServiceHelper
+					.checkShippingAddress(getApplicationContext(), params[0]);
 			return address;
 		}
-
+		
 		@Override
-		public void onPostExecute(ShippingAddressEntity result) {
-
+		public void onPostExecute(ShippingAddressEntity address) {
+			
 			loadingLayout.setVisibility(View.GONE);
-			if (result == null) {
+			if (address == null) {
 				Toast.makeText(getApplicationContext(),
 						getString(R.string.no_shipping_detail_found),
 						Toast.LENGTH_SHORT).show();
-			} else {
+			}
+			else {
 				if (address != null) {
 					shipId = address.getId();
 					nameEditText.setText(address.getName());
@@ -130,7 +130,7 @@ public class ShippingAddressActivity extends Activity {
 			}
 		}
 	}
-
+	
 	private boolean checkDetail() {
 		String name = nameEditText.getText().toString();
 		if (name == null || name.trim().length() == 0) {
@@ -169,7 +169,7 @@ public class ShippingAddressActivity extends Activity {
 					+ getString(R.string.state_is_null) + "</font>"));
 			return false;
 		}
-
+		
 		String pincode = pincodeEdtiText.getText().toString();
 		if (pincode == null || pincode.trim().length() == 0) {
 			pincodeEdtiText.setError(Html.fromHtml("<font name=white>"
@@ -177,9 +177,9 @@ public class ShippingAddressActivity extends Activity {
 			return false;
 		}
 		return true;
-
+		
 	}
-
+	
 	private void insertShippingDetail() {
 		if (checkDetail()) {
 			String name = nameEditText.getText().toString();
@@ -191,9 +191,9 @@ public class ShippingAddressActivity extends Activity {
 			String country = countryList[countrySpinner
 					.getSelectedItemPosition()];
 			String email = emailEditText.getText().toString();
-
+			
 			ShippingAddressEntity addressEntity = new ShippingAddressEntity();
-
+			
 			addressEntity.setId(shipId);
 			addressEntity.setAddress(address);
 			addressEntity.setName(name);
@@ -203,28 +203,29 @@ public class ShippingAddressActivity extends Activity {
 			addressEntity.setPincode(pincode);
 			addressEntity.setCountry(country);
 			addressEntity.setPhone(phone);
-
+			
 			new AsyncPushShippingDetail().execute(addressEntity);
-
-		} else {
+			
+		}
+		else {
 			Toast.makeText(getApplicationContext(), "Please check your inputs",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
-
+	
 	private class AsyncPushShippingDetail extends
 			AsyncTask<ShippingAddressEntity, Void, Integer> {
-
+		
 		@Override
 		public void onPreExecute() {
 		}
-
+		
 		@Override
 		protected Integer doInBackground(ShippingAddressEntity... params) {
 			return WebServiceHelper.insertShippingAddress(
 					getApplicationContext(), params[0]);
 		}
-
+		
 		@Override
 		public void onPostExecute(Integer result) {
 			Intent intent = new Intent(getApplicationContext(),
@@ -235,7 +236,7 @@ public class ShippingAddressActivity extends Activity {
 			startActivity(intent);
 		}
 	}
-
+	
 	private boolean isValidEmailAddress(String email) {
 		Pattern p = java.util.regex.Pattern.compile(".+@.+\\.[a-z]+");
 		Matcher m = p.matcher(email);

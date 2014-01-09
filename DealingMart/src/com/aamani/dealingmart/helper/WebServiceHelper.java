@@ -16,28 +16,36 @@ import android.util.Log;
 
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.entities.CategoryEntity;
+import com.aamani.dealingmart.entities.ProductAttributeEntity;
 import com.aamani.dealingmart.entities.ProductEntity;
 import com.aamani.dealingmart.entities.ShippingAddressEntity;
 import com.aamani.dealingmart.entities.SubCategoryEntity;
 import com.aamani.dealingmart.utility.Utils;
 
+/**
+ * Helper class to send to / receive data from the server via webservice
+ * 
+ * @author Vasu
+ * 
+ */
 public class WebServiceHelper {
-
+	
 	private static final String TAG = "WebServiceHelper";
-
+	
 	private static final String WEB_SERVICE_URL = "http://temp.dealingmart.com/WebService.asmx";
-
+	
 	private static final String NAMESPACE = "http://dealingmart.org/";
-
+	
 	private static final String KEY_CATEGORY = "category";
 	private static final String KEY_SUBCATEGORY = "lsCategory";
-
+	
 	// methods
 	private static final String METHOD_GET_PRODUCT_IMAGES = "getImages";
 	private static final String METHOD_GET_PRODUCT_IDS = "getProdIds";
 	private static final String METHOD_GET_PRODUCT_PRICES = "getProdPrices";
 	private static final String METHOD_GET_PRODUCT_NAMES = "getProdsNames";
 	private static final String METHOD_GET_PRODUCT_SUBCATEGORY = "getSubCategory";
+	private static final String METHOD_GET_PRODUCT_DISCOUNT = "getProdDiscount";
 	private static final String METHOD_GET_PRODUCT_REVIEW = "getProdsReviews";
 	private static final String METHOD_GET_CATEGORY = "getCategory";
 	private static final String METHOD_GET_SUBCATEGORY = "getSubCategory";
@@ -48,6 +56,7 @@ public class WebServiceHelper {
 	private static final String METHOD_INSERT_PRODUCT_INTO_CART = "insertProductIntoCart";
 	private static final String METHOD_GET_BRAND_NAMES = "getBrandNamess";
 	private static final String METHOD_INSERT_GCM_ID = "registerDeviceForPusNotification";
+	private static final String METHOD_GET_PRODUCT_FEATURES = "getProductFeatures";
 	
 	// request
 	private static final String REQUEST_PRODUCT_IMAGES = "allProd";
@@ -57,18 +66,19 @@ public class WebServiceHelper {
 	private static final String REQUEST_BRAND_NAME = "setBrandName";
 	private static final String REQUEST_PRODUCT_RATINGS = "setProdReview";
 	private static final String REQUEST_PRODUCT_SPECIFICATION = "fetchProductSpecification";
-
+	private static final String REQUEST_PRODUCT_DISCOUNT = "setProdDiscount";
+	
 	// constants
 	private static final String PRODUCT_ID = "prodId";
 	private static final String CATEGORY = "category";
 	private static final String PRODUCT_TOTAL_QUANTITY = "totalQuantity";
 	private static final String CART_PRODUCT_ID = "productId";
-
+	
 	private static final String KEY_PRODUCT_NAME = "productName";
-
+	
 	private static final String EMAIL_ID = "email_id";
 	private static final String PASSWORD = "password";
-
+	
 	private static final String SHIP_ID = "shipId";
 	private static final String NAME = "name";
 	private static final String PHONE = "phone";
@@ -82,15 +92,11 @@ public class WebServiceHelper {
 	private static final String GCM_ID = "gcmId";
 	
 	private static final String SESSION_ID = "sessionId";
-
+	
 	private static final String KEY_LIMIT = "limit";
 
+	private static final String PRODUCT_ATTRIBUTE_ID = "attributeId";
 	
-
-	
-
-	
-
 	/**
 	 * Method for getting products
 	 * 
@@ -100,10 +106,10 @@ public class WebServiceHelper {
 	 */
 	public static List<ProductEntity> getProducts(String category,
 			String subCategory, String productName, int limit) {
-
+		
 		List<ProductEntity> products = new ArrayList<ProductEntity>();
 		Utils.setStrictPolicy();
-
+		
 		getProdcutFromWebService(category, subCategory, REQUEST_PRODUCT_IMAGES,
 				products, productName, limit);
 		getProdcutFromWebService(category, subCategory, REQUEST_PRODUCT_IDS,
@@ -113,39 +119,41 @@ public class WebServiceHelper {
 		getProdcutFromWebService(category, subCategory, REQUEST_BRAND_NAME,
 				products, productName, limit);
 		getProdcutFromWebService(category, subCategory,
+				REQUEST_PRODUCT_DISCOUNT, products, productName, limit);
+		getProdcutFromWebService(category, subCategory,
 				REQUEST_PRODUCT_RATINGS, products, productName, limit);
 		return getProdcutFromWebService(category, subCategory,
 				REQUEST_PRODUCT_NAME, products, productName, limit);
-
+		
 	}
-
+	
 	/**
 	 * Fetch specifications
 	 */
 	public static List<CategoryEntity> getCategory(Context context) {
-
+		
 		List<CategoryEntity> categories = new ArrayList<CategoryEntity>();
 		String SOAP_ACTION = NAMESPACE + METHOD_GET_CATEGORY;
-
+		
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_GET_CATEGORY);
-
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject result = null;
 		// SoapObject result1=null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
+			
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			result = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty(0);
-
+			
 			if (result != null) {
 				int categoryCount = result.getPropertyCount();
 				CategoryEntity category = null;
@@ -155,94 +163,102 @@ public class WebServiceHelper {
 					categories.add(category);
 				}
 			}
-		} catch (HttpHostConnectException e) {
+		}
+		catch (HttpHostConnectException e) {
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
-
+		
 		return categories;
 	}
-
+	
 	/**
 	 * Fetch specifications
 	 */
 	public static List<String> getSpecialOffers(Context context) {
-
+		
 		List<String> offers = new ArrayList<String>();
 		String SOAP_ACTION = NAMESPACE + METHOD_GET_OFFERS;
-
+		
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_GET_OFFERS);
-
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject result = null;
 		// SoapObject result1=null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
+			
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			result = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty(0);
-
+			
 			if (result != null) {
 				int categoryCount = result.getPropertyCount();
 				for (int i = 0; i < categoryCount; i++) {
 					offers.add(result.getProperty(i).toString());
 				}
 			}
-		} catch (HttpHostConnectException e) {
+		}
+		catch (HttpHostConnectException e) {
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
-
+		
 		return offers;
 	}
-
+	
 	/**
 	 * Fetch specifications
 	 */
 	public static List<SubCategoryEntity> getSubCategory(Context context,
 			CategoryEntity category) {
-
+		
 		List<SubCategoryEntity> subCategories = new ArrayList<SubCategoryEntity>();
 		String SOAP_ACTION = NAMESPACE + METHOD_GET_SUBCATEGORY;
-
+		
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_GET_SUBCATEGORY);
 		request.addProperty(CATEGORY, category.getCategory());
-
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject result = null;
 		// SoapObject result1=null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
+			
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			result = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty(0);
-
+			
 			if (result != null) {
 				int categoryCount = result.getPropertyCount();
 				SubCategoryEntity subCategory = null;
@@ -254,125 +270,143 @@ public class WebServiceHelper {
 					subCategories.add(subCategory);
 				}
 			}
-		} catch (HttpHostConnectException e) {
+		}
+		catch (HttpHostConnectException e) {
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
-
+		
 		return subCategories;
 	}
-
+	
 	/**
 	 * Fetch specifications
 	 */
 	public static String getProductSpectification(Context context, String prodId) {
-
+		
 		String specifiaction = null;
 		String SOAP_ACTION = NAMESPACE + REQUEST_PRODUCT_SPECIFICATION;
-
+		
 		SoapObject request = new SoapObject(NAMESPACE,
 				REQUEST_PRODUCT_SPECIFICATION);
 		request.addProperty(PRODUCT_ID, prodId);
-
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject result = null;
 		// SoapObject result1=null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
+			
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			result = (SoapObject) envelope.bodyIn;
-
+			
 			if (!result.getProperty(0).toString().equals(null)
 					|| result.getProperty(0).toString() != null) {
 				specifiaction = result.getProperty(0).toString();
 			}
-		} catch (HttpHostConnectException e) {
+		}
+		catch (HttpHostConnectException e) {
 			specifiaction = context.getString(R.string.no_spec_found);
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			specifiaction = context.getString(R.string.no_spec_found);
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			specifiaction = context.getString(R.string.no_spec_found);
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
 			specifiaction = context.getString(R.string.no_spec_found);
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
-
+		
 		return specifiaction;
 	}
-
+	
 	// load products from a web service
 	private static List<ProductEntity> getProdcutFromWebService(
 			String category, String subCategory, String requestCategory,
 			List<ProductEntity> productList, String productName, int limit) {
-
+		
 		StringBuilder SOAP_ACTION = new StringBuilder(NAMESPACE);
 		String METHOD_NAME;
-
+		
 		if (requestCategory.equals(REQUEST_PRODUCT_IMAGES)) {
 			METHOD_NAME = METHOD_GET_PRODUCT_IMAGES;
-		} else if (requestCategory.equals(REQUEST_PRODUCT_IDS)) {
+		}
+		else if (requestCategory.equals(REQUEST_PRODUCT_IDS)) {
 			METHOD_NAME = METHOD_GET_PRODUCT_IDS;
-		} else if (requestCategory.equals(REQUEST_PRODUCT_PRICE)) {
+		}
+		else if (requestCategory.equals(REQUEST_PRODUCT_PRICE)) {
 			METHOD_NAME = METHOD_GET_PRODUCT_PRICES;
-		} else if (requestCategory.equals(REQUEST_PRODUCT_NAME)) {
+		}
+		else if (requestCategory.equals(REQUEST_PRODUCT_NAME)) {
 			METHOD_NAME = METHOD_GET_PRODUCT_NAMES;
-		} else if (requestCategory.equals(REQUEST_BRAND_NAME)) {
+		}
+		else if (requestCategory.equals(REQUEST_BRAND_NAME)) {
 			METHOD_NAME = METHOD_GET_BRAND_NAMES;
-		} else if (requestCategory.equals(REQUEST_PRODUCT_RATINGS)) {
+		}
+		else if (requestCategory.equals(REQUEST_PRODUCT_DISCOUNT)) {
+			METHOD_NAME = METHOD_GET_PRODUCT_DISCOUNT;
+		}
+		else if (requestCategory.equals(REQUEST_PRODUCT_RATINGS)) {
 			METHOD_NAME = METHOD_GET_PRODUCT_REVIEW;
-		} else {
+		}
+		else {
 			METHOD_NAME = METHOD_GET_PRODUCT_SUBCATEGORY;
 		}
-
+		
 		SOAP_ACTION.append(METHOD_NAME);
-
+		
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
+		
 		// adding category and subcategory
 		request.addProperty(KEY_LIMIT, limit);
 		if (productName != null && !productName.isEmpty()) {
 			request.addProperty(KEY_PRODUCT_NAME, productName);
-		} else {
+		}
+		else {
 			request.addProperty(KEY_CATEGORY, category);
 			request.addProperty(KEY_SUBCATEGORY, subCategory);
 		}
-
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject response = null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport.call(SOAP_ACTION.toString(), envelope);
-
+			
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			response = (SoapObject) ((SoapObject) envelope.bodyIn)
 					.getProperty(0);
-
+			
 			int productCount = response.getPropertyCount();
-
+			
 			if (response != null) {
 				// Log.i("urls length..", urlsLen+"");
 				if (requestCategory.equals(REQUEST_PRODUCT_IMAGES)) {
@@ -384,58 +418,76 @@ public class WebServiceHelper {
 						Log.i(TAG, response.getProperty(i).toString());
 						productList.add(product);
 					}
-
-				} else if (requestCategory.equals(REQUEST_PRODUCT_IDS)) {
+					
+				}
+				else if (requestCategory.equals(REQUEST_PRODUCT_IDS)) {
 					for (int i = 0; i < productCount; i++) {
 						productList.get(i).setProductId(
 								response.getProperty(i).toString());
 						Log.i(TAG, response.getProperty(i).toString());
 					}
-				} else if (requestCategory.equals(REQUEST_PRODUCT_PRICE)) {
+				}
+				else if (requestCategory.equals(REQUEST_PRODUCT_PRICE)) {
 					for (int i = 0; i < productCount; i++) {
 						productList.get(i).setProductPrice(
 								Integer.parseInt(response.getProperty(i)
 										.toString()));
 						Log.i(TAG, response.getProperty(i).toString());
 					}
-				} else if (requestCategory.equals(REQUEST_PRODUCT_NAME)) {
+				}
+				else if (requestCategory.equals(REQUEST_PRODUCT_NAME)) {
 					for (int i = 0; i < productCount; i++) {
 						productList.get(i).setProductName(
 								response.getProperty(i).toString());
 						Log.i(TAG, response.getProperty(i).toString());
 					}
-				} else if (requestCategory.equals(REQUEST_PRODUCT_RATINGS)) {
+				}
+				else if (requestCategory.equals(REQUEST_PRODUCT_RATINGS)) {
 					for (int i = 0; i < productCount; i++) {
 						productList.get(i).setProductRating(
 								Integer.parseInt(response.getProperty(i)
 										.toString()));
 						Log.i(TAG, response.getProperty(i).toString());
 					}
-				} else if (requestCategory.equals(REQUEST_BRAND_NAME)) {
+				}
+				else if (requestCategory.equals(REQUEST_PRODUCT_DISCOUNT)) {
+					for (int i = 0; i < productCount; i++) {
+						productList.get(i).setProductDiscount(
+								Integer.parseInt(response.getProperty(i)
+										.toString()));
+					}
+				}
+				else if (requestCategory.equals(REQUEST_BRAND_NAME)) {
 					for (int i = 0; i < productCount; i++) {
 						String brandName = response.getProperty(i).toString();
-						if (brandName == null || brandName.isEmpty() || brandName.equals("anyType{}")) {
+						if (brandName == null || brandName.isEmpty()
+								|| brandName.equals("anyType{}")) {
 							continue;
-						} else {
+						}
+						else {
 							productList.get(i).setBrandName(
 									response.getProperty(i).toString());
 						}
 					}
 				}
 			}
-
-		} catch (HttpHostConnectException e) {
+			
+		}
+		catch (HttpHostConnectException e) {
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (IndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
 		return productList;
 	}
-
+	
 	/**
 	 * Method for checking shipping address
 	 * 
@@ -445,35 +497,35 @@ public class WebServiceHelper {
 	 */
 	public static ShippingAddressEntity checkShippingAddress(Context context,
 			String email) {
-
+		
 		ShippingAddressEntity address = null;
 		String SOAP_ACTION = NAMESPACE + METHOD_CHECK_SHIPPING_ADDRESS;
-
+		
 		SoapObject request = new SoapObject(NAMESPACE,
 				METHOD_CHECK_SHIPPING_ADDRESS);
-
+		
 		request.addProperty(EMAIL_ID, email);
-
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject result = null;
 		// SoapObject result1=null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
+			
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			result = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty(0);
-
+			
 			if (result != null && result.getPropertyCount() > 0) {
 				address = new ShippingAddressEntity();
-
+				
 				address.setId(Integer.parseInt(result.getProperty("id")
 						.toString()));
 				address.setName(result.getProperty("name").toString());
@@ -485,22 +537,27 @@ public class WebServiceHelper {
 				address.setPincode(result.getProperty("pincode").toString());
 				address.setCountry(result.getProperty("country").toString());
 			}
-		} catch (HttpHostConnectException e) {
+		}
+		catch (HttpHostConnectException e) {
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			Log.e(TAG, "Exception", e);
 		}
-
+		
 		return address;
-
+		
 	}
-
+	
 	/**
 	 * Method for pushing shipping detail
 	 * 
@@ -517,13 +574,13 @@ public class WebServiceHelper {
 	 */
 	public static int insertShippingAddress(Context context,
 			ShippingAddressEntity address) {
-
+		
 		int shippingId = 0;
 		String SOAP_ACTION = NAMESPACE + METHOD_INSERT_SHIPPING_ID;
-
+		
 		SoapObject request = new SoapObject(NAMESPACE,
 				METHOD_INSERT_SHIPPING_ID);
-
+		
 		request.addProperty(SHIP_ID, address.getId());
 		request.addProperty(NAME, address.getName());
 		request.addProperty(PHONE, address.getPhone());
@@ -533,93 +590,102 @@ public class WebServiceHelper {
 		request.addProperty(STATE, address.getState());
 		request.addProperty(PINCODE, address.getPincode());
 		request.addProperty(COUNTRY, address.getCountry());
-
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject result = null;
 		// SoapObject result1=null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
+			
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			result = (SoapObject) envelope.bodyIn;
-
+			
 			if (result != null && result.getPropertyCount() > 0) {
 				shippingId = Integer.parseInt(result.getProperty(0).toString());
 			}
-		} catch (HttpHostConnectException e) {
+		}
+		catch (HttpHostConnectException e) {
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
-
+		
 		return shippingId;
-
+		
 	}
 	
 	/**
 	 * Method for inserting gcm id to the server
+	 * 
 	 * @param context
 	 * @param address
 	 * @return
 	 */
 	public static int registerDeviceForPushNotification(Context context,
-			String googleAccount,String gcmId) {
-
+			String googleAccount, String gcmId) {
+		
 		int insertedGcmId = 0;
 		String SOAP_ACTION = NAMESPACE + METHOD_INSERT_GCM_ID;
-
-		SoapObject request = new SoapObject(NAMESPACE,
-				METHOD_INSERT_GCM_ID);
-
+		
+		SoapObject request = new SoapObject(NAMESPACE, METHOD_INSERT_GCM_ID);
+		
 		request.addProperty(GOOGLE_ACCOUNT, googleAccount);
 		request.addProperty(GCM_ID, gcmId);
-
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject result = null;
 		// SoapObject result1=null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
+			
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			result = (SoapObject) envelope.bodyIn;
-
+			
 			if (result != null && result.getPropertyCount() > 0) {
-				insertedGcmId = Integer.parseInt(result.getProperty(0).toString());
+				insertedGcmId = Integer.parseInt(result.getProperty(0)
+						.toString());
 			}
-		} catch (HttpHostConnectException e) {
+		}
+		catch (HttpHostConnectException e) {
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
-
+		
 		return insertedGcmId;
-
+		
 	}
-
+	
 	/**
 	 * Method for authenticating user
 	 * 
@@ -630,47 +696,52 @@ public class WebServiceHelper {
 	public static boolean authenticate(String userName, String password) {
 		boolean isValid = false;
 		String SOAP_ACTION = NAMESPACE + METHOD_AUTHENTICATION;
-
+		
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_AUTHENTICATION);
-
+		
 		request.addProperty(EMAIL_ID, userName);
 		request.addProperty(PASSWORD, password);
-
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject result = null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
+			
 			result = (SoapObject) envelope.bodyIn;
-
+			
 			if (result.getProperty(0).toString() != null) {
 				isValid = Boolean
 						.parseBoolean(result.getProperty(0).toString());
 			}
-		} catch (NumberFormatException e) {
+		}
+		catch (NumberFormatException e) {
 			Log.e(TAG, "NumberFormatException", e);
-		} catch (HttpHostConnectException e) {
+		}
+		catch (HttpHostConnectException e) {
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
-
+		
 		return isValid;
 	}
-
+	
 	/**
 	 * Method for pushing products into cart
 	 * 
@@ -680,32 +751,33 @@ public class WebServiceHelper {
 	public static boolean pushProductFromCart(String sessionId,
 			ProductEntity product) {
 		boolean isInseted = false;
-
+		
 		String SOAP_ACTION = NAMESPACE + METHOD_INSERT_PRODUCT_INTO_CART;
-
+		
 		SoapObject request = new SoapObject(NAMESPACE,
 				METHOD_INSERT_PRODUCT_INTO_CART);
-
+		
 		request.addProperty(SESSION_ID, sessionId);
 		request.addProperty(CART_PRODUCT_ID, product.getProductId());
 		request.addProperty(PRODUCT_TOTAL_QUANTITY, product.getProductCount());
-
+		request.addProperty(PRODUCT_ATTRIBUTE_ID, product.getAttributeId());
+		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.dotNet = true;
 		envelope.setOutputSoapObject(request);
 		SoapObject result = null;
-
+		
 		try {
 			HttpTransportSE androidHttpTransport = new HttpTransportSE(
 					WEB_SERVICE_URL);
 			androidHttpTransport
 					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
+			
 			androidHttpTransport.call(SOAP_ACTION, envelope);
-
+			
 			result = (SoapObject) envelope.bodyIn;
-
+			
 			if (result.getProperty(0).toString() != null) {
 				int insertedId = Integer.valueOf(result.getProperty(0)
 						.toString());
@@ -713,18 +785,97 @@ public class WebServiceHelper {
 					isInseted = true;
 				}
 			}
-		} catch (NumberFormatException e) {
+		}
+		catch (NumberFormatException e) {
 			Log.e(TAG, "NumberFormatException", e);
-		} catch (HttpHostConnectException e) {
+		}
+		catch (HttpHostConnectException e) {
 			Log.e(TAG, "HttpHostConnectException", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			Log.e(TAG, "IOException", e);
-		} catch (XmlPullParserException e) {
+		}
+		catch (XmlPullParserException e) {
 			Log.e(TAG, "XmlPullParserException", e);
-		} catch (ArrayIndexOutOfBoundsException e) {
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
-
+		
 		return isInseted;
+	}
+	
+	/**
+	 * Method for getting product features
+	 * 
+	 * @param context
+	 * @param email
+	 * @return
+	 */
+	public static List<ProductAttributeEntity> getProductAttributes(
+			String productId, String methodType) {
+		
+		List<ProductAttributeEntity> features = new ArrayList<ProductAttributeEntity>();
+		
+		String SOAP_ACTION = NAMESPACE + methodType;
+		
+		SoapObject request = new SoapObject(NAMESPACE, methodType);
+		
+		request.addProperty(CART_PRODUCT_ID, productId);
+		
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+		envelope.dotNet = true;
+		envelope.setOutputSoapObject(request);
+		SoapObject result = null;
+		// SoapObject result1=null;
+		
+		try {
+			HttpTransportSE androidHttpTransport = new HttpTransportSE(
+					WEB_SERVICE_URL);
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+			
+			androidHttpTransport
+					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			
+			result = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty(0);
+			
+			ProductAttributeEntity feature = null;
+			if (result != null) {
+				for (int i = 0; i < result.getPropertyCount(); i++) {
+					feature = new ProductAttributeEntity();
+					
+					feature.setAttributeId(Integer
+							.parseInt(((SoapObject) result.getProperty(i))
+									.getProperty("featureId").toString()));
+					feature.setAttributeTitle(((SoapObject) result
+							.getProperty(i)).getProperty("featureTitle")
+							.toString());
+					feature.setAttributeValue(((SoapObject) result
+							.getProperty(i)).getProperty("featureValue")
+							.toString());
+					
+					features.add(feature);
+				}
+			}
+		}
+		catch (HttpHostConnectException e) {
+			Log.e(TAG, "HttpHostConnectException", e);
+		}
+		catch (IOException e) {
+			Log.e(TAG, "IOException", e);
+		}
+		catch (XmlPullParserException e) {
+			Log.e(TAG, "XmlPullParserException", e);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
+		}
+		catch (Throwable e) {
+			Log.e(TAG, "Exception", e);
+		}
+		
+		return features;
+		
 	}
 }

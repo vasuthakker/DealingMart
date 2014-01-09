@@ -13,6 +13,7 @@
     <string name="title_activity_product_detail">ProductDetailActivity</string>
     <string name="buy_now">Buy Now</string>
     <string name="specifications">Specifications</string>
+    <string name="dialog_message">Share DealingMart information and Get Surprise gifts </string>
 
     <!-- category -->
     <string name="category_electronics">Electronics</string>
@@ -136,5 +137,11 @@
     <string name="product_url">http://www.dealingmart.com/Particular.aspx?product_id=$</string>
     <string name="product__info_detail_text">Great * on Dealing Mart View this link $ to buy the product</string>
     <string name="get_new_products">Getting New Products,Please Wait</string>
+    <string name="title_activity_display_contact">DisplayContactActivity</string>
+    <string name="contacts">Contacts</string>
+    <string name="send_message">Send</string>
+    <string name="loading_text">Loading, Please wait</string>
+    <string name="features">Features</string>
+    <string name="product_detail_attribute_title">Product Detail</string>
 
 </resources>
