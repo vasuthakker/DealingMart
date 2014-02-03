@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ public class ShippingAddressActivity extends Activity {
 	private String[] countryList;
 	private String sessionId;
 	private int shipId;
-	
+	private ProgressBar loadingBar;
 	private LinearLayout loadingLayout;
 	
 	@Override
@@ -61,6 +62,7 @@ public class ShippingAddressActivity extends Activity {
 		pincodeEdtiText = (EditText) findViewById(R.id.shipping_pincode_edittext);
 		submitButton = (Button) findViewById(R.id.shipping_submit_buton);
 		loadingLayout = (LinearLayout) findViewById(R.id.shipping_activity_loading_layout);
+		loadingBar = (ProgressBar) findViewById(R.id.shipping_loading_progressbar);
 		
 		submitButton.setOnClickListener(new OnClickListener() {
 			
@@ -85,7 +87,6 @@ public class ShippingAddressActivity extends Activity {
 	
 	private class CheckShippingAddressAsync extends
 			AsyncTask<String, Void, ShippingAddressEntity> {
-		
 		
 		@Override
 		public void onPreExecute() {
@@ -218,6 +219,7 @@ public class ShippingAddressActivity extends Activity {
 		
 		@Override
 		public void onPreExecute() {
+			loadingBar.setVisibility(View.VISIBLE);
 		}
 		
 		@Override
@@ -228,6 +230,7 @@ public class ShippingAddressActivity extends Activity {
 		
 		@Override
 		public void onPostExecute(Integer result) {
+			loadingBar.setVisibility(View.GONE);
 			Intent intent = new Intent(getApplicationContext(),
 					OrderSummaryActivity.class);
 			intent.putExtra(DealingMartConstatns.EMAIL_ID, emailId);

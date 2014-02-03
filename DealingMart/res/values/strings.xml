@@ -13,7 +13,9 @@
     <string name="title_activity_product_detail">ProductDetailActivity</string>
     <string name="buy_now">Buy Now</string>
     <string name="specifications">Specifications</string>
-    <string name="dialog_message">Share DealingMart information and Get Surprise gifts </string>
+    <string name="dialog_message">Share DealingMart information and Get assured gifts </string>
+    <string name="share_message">Please install this app dealingmart from https://play.google.com/store/apps/details?id=com.aamani.dealingmart&amp;hl=en and get surprise gifts from me</string>
+    <string name="dialog_message_backto_contact_activity">Use promo code offer2014 and get Rs.500 off on your first purchase and your first purchase should be above or same Rs.2500</string>
 
     <!-- category -->
     <string name="category_electronics">Electronics</string>
@@ -70,8 +72,6 @@
     <string name="share_product_info">Share Product Information And Get Rewards</string>
     <string name="product_share_message">An offer is available on $, Please install the app from google playstore to access it.</string>
     <string name="email_subject">Dealing Mart Offer</string>
-    <string name="twitter_not_installed">Twitter is not installed on your device</string>
-    <string name="facebook_not_installed">Facebook is not installed on your device</string>
     <string name="title_activity_full_image">FullImageActivity</string>
     <string name="brands_title">Brands</string>
     <string name="no_spec_found">No specifications found</string>
@@ -86,6 +86,9 @@
 
     <!-- error messages -->
     <string name="no_products_found">No products found for this category,Please try another category</string>
+    <string name="twitter_not_installed">Twitter is not installed on your device</string>
+    <string name="whatsapp_not_installed">Whatsapp is not installed on your device</string>
+    <string name="facebook_not_installed">Facebook is not installed on your device</string>
     <string name="credential_invalid">Please provide valid credential</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="login_guest_title">"Continue as a "</string>
@@ -143,5 +146,25 @@
     <string name="loading_text">Loading, Please wait</string>
     <string name="features">Features</string>
     <string name="product_detail_attribute_title">Product Detail</string>
+    <string name="share_app_via">Share Application Information Via</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="title_activity_contact_us">ContactUsActivity</string>
+    <string name="head_office_title">Head Office</string>
+    <string name="office_address">Aamani Group</string>
+    <string name="abad_branch">Ahmedabad Branch</string>
+    <string name="abad_address">Aamani House, 6/7, P.K House,B/h M.J. Library,Ellisbridge</string>
+    <string name="amreli_branch">Amreli Branch</string>
+    <string name="amreli_address">1st floor,Sahkar Bhavan, Opp Bhidbhanjan temple,Amreli</string>
+    <string name="mehsana_branch">Mehsana Branch</string>
+    <string name="mehsana_address">G-36 Wide Angle Complex, Nr. Khsuhi Rivers, Opp. Himalaya mall,Mehsana</string>
+    <string name="surat_bracnh">Surat Branch</string>
+    <string name="surat_address">v-7/8, Shakuntal Complex, Nr. Sanghvi Towers, Gujarat gas circle.</string>
+    <string name="rajkot_branch">Rajkot Branch</string>
+    <string name="rajkot_address">501, 5th Floor, Alap – B, Limda Ckowk, Opp. Sashrti Medan, Rajkot</string>
+    <string name="bhavnagar_branch">Bhavnagar Branch</string>
+    <string name="bhavnagar_address">108,Shopers plaza, Parimal chawk, Opp Jade Blue,Vaghvadi Road</string>
+    <string name="nj_bracnh">New Jersey Branch</string>
+    <string name="nj_address">New Jersey, 9732235047</string>
+    <string name="share_application">Share Application Information</string>
 
 </resources>

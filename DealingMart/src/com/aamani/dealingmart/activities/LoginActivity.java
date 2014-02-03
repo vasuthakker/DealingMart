@@ -25,11 +25,12 @@ import com.aamani.dealingmart.utility.Utils;
 
 /**
  * Activity for guest / user login
+ * 
  * @author Vasu
- *
+ * 
  */
 public class LoginActivity extends Activity {
-
+	
 	private Button guestLoginButton;
 	private Button customerLoginButton;
 	private EditText customerEmailEditText;
@@ -37,50 +38,52 @@ public class LoginActivity extends Activity {
 	private LinearLayout customerLayout;
 	private TextView titleTextView;
 	private String sessionId;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-
+		
 		final LinearLayout guestLayout = (LinearLayout) findViewById(R.id.guest_layout);
-
+		
 		guestLoginButton = (Button) findViewById(R.id.customer_guest_button);
 		customerLoginButton = (Button) findViewById(R.id.customer_login_button);
-
+		
 		customerEmailEditText = (EditText) findViewById(R.id.customer_login_emailid_edittext);
 		customerPasswordEditText = (EditText) findViewById(R.id.customer_login_password_edittext);
 		customerLayout = (LinearLayout) findViewById(R.id.customer_layout);
 		titleTextView = (TextView) findViewById(R.id.login_title_textview);
-
+		
 		customerEmailEditText
 				.setOnFocusChangeListener(new OnFocusChangeListener() {
-
+					
 					@Override
 					public void onFocusChange(View v, boolean hasFocus) {
 						if (hasFocus) {
 							guestLayout.setVisibility(View.GONE);
-						} else {
+						}
+						else {
 							guestLayout.setVisibility(View.VISIBLE);
 						}
 					}
 				});
-
+		
 		customerPasswordEditText
 				.setOnFocusChangeListener(new OnFocusChangeListener() {
-
+					
 					@Override
 					public void onFocusChange(View v, boolean hasFocus) {
 						if (hasFocus) {
 							guestLayout.setVisibility(View.GONE);
-						} else {
+						}
+						else {
 							guestLayout.setVisibility(View.VISIBLE);
 						}
 					}
 				});
-
+		
 		customerLayout.setOnTouchListener(new OnTouchListener() {
-
+			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				guestLayout.setVisibility(View.VISIBLE);
@@ -88,9 +91,9 @@ public class LoginActivity extends Activity {
 				return true;
 			}
 		});
-
+		
 		customerLoginButton.setOnClickListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
 				// Intent intent = new Intent(getApplicationContext(),
@@ -102,45 +105,45 @@ public class LoginActivity extends Activity {
 							.fromHtml("<font color=white>Email Id can't be null</font>"));
 					return;
 				}
-
+				
 				String password = customerPasswordEditText.getText().toString();
 				if (password == null || password.trim().length() == 0) {
 					customerPasswordEditText.setError(Html
 							.fromHtml("<font color=white>password can't be null</font>"));
 					return;
 				}
-
+				
 				new AsycLoginTask(getApplicationContext()).execute(emailId,
 						password);
-
+				
 			}
 		});
-
+		
 		// -----------------------generating a session
 		// id-------------------------------//
 		sessionId = "Mobile." + Utils.getUniquId(getApplicationContext()) + "."
 				+ System.currentTimeMillis();
-
+		
 		guestLoginButton.setOnClickListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
-				guestLayout.setVisibility(View.GONE);
-				titleTextView.setText("Register");
-//				Intent in=new Intent(getApplicationContext(),ShippingAddressActivity.class);
-//				in.putExtra(DealingMartConstatns.SESSION_ID, sessionId);
-//				startActivity(in);
+//				guestLayout.setVisibility(View.GONE);
+//				titleTextView.setText("Register");
+				Intent in = new Intent(getApplicationContext(),
+						ShippingAddressActivity.class);
+				in.putExtra(DealingMartConstatns.SESSION_ID, sessionId);
+				startActivity(in);
 			}
 		});
-
+		
 	}
-
-
-	public class AsycLoginTask extends AsyncTask<String, Void, Boolean> {
-
+	
+	private class AsycLoginTask extends AsyncTask<String, Void, Boolean> {
+		
 		private Context context;
 		private ProgressDialog dialog;
-
+		
 		@Override
 		public void onPreExecute() {
 			dialog = new ProgressDialog(LoginActivity.this);
@@ -149,23 +152,23 @@ public class LoginActivity extends Activity {
 			dialog.setMessage("Vaildating credential");
 			dialog.show();
 		}
-
+		
 		public AsycLoginTask(Context context) {
 			this.context = context;
 		}
-
+		
 		@Override
 		protected Boolean doInBackground(String... params) {
 			boolean isValid = false;
 			if (params != null && params.length > 0) {
 				String userName = params[0];
 				String password = params[1];
-
+				
 				isValid = WebServiceHelper.authenticate(userName, password);
 			}
 			return isValid;
 		}
-
+		
 		@Override
 		public void onPostExecute(Boolean result) {
 			if (dialog != null && dialog.isShowing()) {
@@ -180,12 +183,13 @@ public class LoginActivity extends Activity {
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(intent);
 				finish();
-			} else {
+			}
+			else {
 				Toast.makeText(context,
 						context.getString(R.string.credential_invalid),
 						Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
-
+	
 }

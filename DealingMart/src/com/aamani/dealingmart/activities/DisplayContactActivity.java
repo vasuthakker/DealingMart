@@ -3,17 +3,25 @@ package com.aamani.dealingmart.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aamani.dealingmart.R;
@@ -23,7 +31,7 @@ import com.aamani.dealingmart.entities.Contact;
 import com.aamani.dealingmart.helper.OSContactHelper;
 import com.aamani.dealingmart.utility.Utils;
 
-public class DisplayContactActivity extends Activity {
+public class DisplayContactActivity extends FragmentActivity {
 	
 	private static final CharSequence SEND_EMAIL = "Send Mail";
 	private static final String TAG = "DisplayContactActivity";
@@ -37,6 +45,7 @@ public class DisplayContactActivity extends Activity {
 	private List<Integer> selectedContactList = new ArrayList<Integer>();
 	
 	private List<Contact> osContactList;
+	private boolean isShareDone = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +65,14 @@ public class DisplayContactActivity extends Activity {
 		if (isNumberOnly || isEmailOnly) {
 			new ContactLoaderAsyncTask().execute(isNumberOnly, isEmailOnly);
 		}
-		
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (isShareDone) {
+			showOfferDialog();
+		}
 		
 	}
 	
@@ -79,8 +90,10 @@ public class DisplayContactActivity extends Activity {
 			Uri sendSmsTo = Uri.parse("smsto:" + numbers.toString());
 			Intent intent = new Intent(android.content.Intent.ACTION_SENDTO,
 					sendSmsTo);
-			intent.putExtra("sms_body", "hello");
+			intent.putExtra("sms_body", getString(R.string.share_message));
 			startActivity(intent);
+			
+			isShareDone = true;
 		}
 	}
 	
@@ -103,12 +116,14 @@ public class DisplayContactActivity extends Activity {
 				shareIntent.putExtra(android.content.Intent.EXTRA_EMAIL,
 						nameArray);
 				
-				shareIntent
-						.putExtra(android.content.Intent.EXTRA_TEXT, "hello");
+				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+						getString(R.string.share_message));
 				
 				shareIntent.setType("message/rfc822");
 				
 				startActivity(Intent.createChooser(shareIntent, SEND_EMAIL));
+				
+				isShareDone = true;
 			}
 		}
 		catch (ArrayStoreException e) {
@@ -169,17 +184,67 @@ public class DisplayContactActivity extends Activity {
 							sendMail(sendList);
 						}
 						
-						Utils.setPreference(getApplicationContext(), DealingMartConstatns.APP_SHARED, "T");
+						Utils.setPreference(getApplicationContext(),
+								DealingMartConstatns.APP_SHARED, "T");
+						
 					}
 					else {
 						Toast.makeText(getApplicationContext(),
 								"Please select atleast one contact",
 								Toast.LENGTH_SHORT).show();
 					}
+					
 				}
 			});
+			
 		}
 		
 	}
 	
+	private void showOfferDialog() {
+		DialogFragment dialog = new MessageDialog();
+		dialog.show(getSupportFragmentManager(),
+				DealingMartConstatns.OFFER_DIALOG);
+	}
+	
+	@SuppressLint("ValidFragment")
+	private class MessageDialog extends DialogFragment {
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final Dialog dialog = super.onCreateDialog(savedInstanceState);
+			
+			dialog.setCancelable(false);
+			dialog.setCanceledOnTouchOutside(false);
+			
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			getWindow().setBackgroundDrawable(
+					new ColorDrawable(android.graphics.Color.TRANSPARENT));
+			dialog.setContentView(R.layout.message_dialog);
+			
+			Button btnOK = (Button) dialog.findViewById(R.id.button_ok);
+			
+			TextView messageTextView = (TextView) dialog
+					.findViewById(R.id.dialog_message);
+			messageTextView.setText(Html.fromHtml(getString(
+					R.string.dialog_message_backto_contact_activity).replace(
+					"offer2014", "<font color=red>offer2014</font>")));
+			
+			ImageView surpriseImage = (ImageView) dialog
+					.findViewById(R.id.surprise_image);
+			surpriseImage.setVisibility(View.GONE);
+			
+			Button btnCancel = (Button) dialog.findViewById(R.id.button_cancel);
+			btnCancel.setVisibility(View.GONE);
+			
+			btnOK.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dialog.dismiss();
+				}
+			});
+			
+			return dialog;
+			
+		}
+	}
 }

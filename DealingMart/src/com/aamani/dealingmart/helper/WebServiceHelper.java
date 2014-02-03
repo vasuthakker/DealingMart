@@ -56,7 +56,8 @@ public class WebServiceHelper {
 	private static final String METHOD_INSERT_PRODUCT_INTO_CART = "insertProductIntoCart";
 	private static final String METHOD_GET_BRAND_NAMES = "getBrandNamess";
 	private static final String METHOD_INSERT_GCM_ID = "registerDeviceForPusNotification";
-	private static final String METHOD_GET_PRODUCT_FEATURES = "getProductFeatures";
+	private static final String METHOD_UPDATE_SHARE_NUMBER = "updateShareNumber";
+	private static final String METHOD_GET_PRODUCT_SPECIFICATION = "fetchProductSpecification";
 	
 	// request
 	private static final String REQUEST_PRODUCT_IMAGES = "allProd";
@@ -65,7 +66,6 @@ public class WebServiceHelper {
 	private static final String REQUEST_PRODUCT_NAME = "setProdName";
 	private static final String REQUEST_BRAND_NAME = "setBrandName";
 	private static final String REQUEST_PRODUCT_RATINGS = "setProdReview";
-	private static final String REQUEST_PRODUCT_SPECIFICATION = "fetchProductSpecification";
 	private static final String REQUEST_PRODUCT_DISCOUNT = "setProdDiscount";
 	
 	// constants
@@ -94,8 +94,10 @@ public class WebServiceHelper {
 	private static final String SESSION_ID = "sessionId";
 	
 	private static final String KEY_LIMIT = "limit";
-
+	
 	private static final String PRODUCT_ATTRIBUTE_ID = "attributeId";
+	
+	private static final String SHARE_NUMBER = "shareNumber";
 	
 	/**
 	 * Method for getting products
@@ -293,10 +295,10 @@ public class WebServiceHelper {
 	public static String getProductSpectification(Context context, String prodId) {
 		
 		String specifiaction = null;
-		String SOAP_ACTION = NAMESPACE + REQUEST_PRODUCT_SPECIFICATION;
+		String SOAP_ACTION = NAMESPACE + METHOD_GET_PRODUCT_SPECIFICATION;
 		
 		SoapObject request = new SoapObject(NAMESPACE,
-				REQUEST_PRODUCT_SPECIFICATION);
+				METHOD_GET_PRODUCT_SPECIFICATION);
 		request.addProperty(PRODUCT_ID, prodId);
 		
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
@@ -316,8 +318,7 @@ public class WebServiceHelper {
 			
 			result = (SoapObject) envelope.bodyIn;
 			
-			if (!result.getProperty(0).toString().equals(null)
-					|| result.getProperty(0).toString() != null) {
+			if (result.getProperty(0).toString() != null) {
 				specifiaction = result.getProperty(0).toString();
 			}
 		}
@@ -485,6 +486,10 @@ public class WebServiceHelper {
 		catch (IndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
+		catch (Exception e) {
+			Log.e(TAG, "Exception", e);
+			
+		}
 		return productList;
 	}
 	
@@ -624,6 +629,10 @@ public class WebServiceHelper {
 		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
+		catch (Exception e) {
+			Log.e(TAG, "Exception", e);
+			
+		}
 		
 		return shippingId;
 		
@@ -680,6 +689,10 @@ public class WebServiceHelper {
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
+		}
+		catch (Exception e) {
+			Log.e(TAG, "Exception", e);
+			
 		}
 		
 		return insertedGcmId;
@@ -738,7 +751,10 @@ public class WebServiceHelper {
 		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
 		}
-		
+		catch (Exception e) {
+			Log.e(TAG, "Exception", e);
+			
+		}
 		return isValid;
 	}
 	
@@ -800,6 +816,10 @@ public class WebServiceHelper {
 		}
 		catch (ArrayIndexOutOfBoundsException e) {
 			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
+		}
+		catch (Exception e) {
+			Log.e(TAG, "Exception", e);
+			
 		}
 		
 		return isInseted;
@@ -877,5 +897,59 @@ public class WebServiceHelper {
 		
 		return features;
 		
+	}
+	
+	/**
+	 * Webservice to update share number
+	 * 
+	 * @param shareNumber
+	 * @return
+	 */
+	public static boolean updateShareNumber(int shareNumber) {
+		
+		boolean isUpdated = false;
+		String SOAP_ACTION = NAMESPACE + METHOD_UPDATE_SHARE_NUMBER;
+		
+		SoapObject request = new SoapObject(NAMESPACE,
+				METHOD_UPDATE_SHARE_NUMBER);
+		
+		request.addProperty(SHARE_NUMBER, shareNumber);
+		
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+		envelope.dotNet = true;
+		envelope.setOutputSoapObject(request);
+		SoapObject result = null;
+		// SoapObject result1=null;
+		
+		try {
+			HttpTransportSE androidHttpTransport = new HttpTransportSE(
+					WEB_SERVICE_URL);
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+			
+			androidHttpTransport
+					.setXmlVersionTag("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			
+			result = (SoapObject) envelope.bodyIn;
+			
+			if (result != null && result.getProperty(0).toString() != null) {
+				isUpdated = Boolean.parseBoolean(result.getProperty(0)
+						.toString());
+			}
+		}
+		catch (HttpHostConnectException e) {
+			Log.e(TAG, "HttpHostConnectException", e);
+		}
+		catch (IOException e) {
+			Log.e(TAG, "IOException", e);
+		}
+		catch (XmlPullParserException e) {
+			Log.e(TAG, "XmlPullParserException", e);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			Log.e(TAG, "ArrayIndexOutOfBoundsException", e);
+		}
+		
+		return isUpdated;
 	}
 }

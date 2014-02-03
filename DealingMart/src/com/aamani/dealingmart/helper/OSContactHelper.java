@@ -100,9 +100,7 @@ public final class OSContactHelper {
 								.parseInt(emailCur.getString(emailCur
 										.getColumnIndex(ContactsContract.CommonDataKinds.Email.IS_PRIMARY)));
 						
-						if (email != null && !email.isEmpty()
-								&& contact.getEmail() == null
-								&& isPrimaryEmail > 0) {
+						if (email != null && !email.isEmpty()) {
 							contact.setEmail(email);
 							hasEmailAddress = true;
 							

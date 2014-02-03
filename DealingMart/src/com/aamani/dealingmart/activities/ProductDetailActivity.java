@@ -225,10 +225,6 @@ public class ProductDetailActivity extends Activity {
 								SHARE_PRODUCT_TITLE));
 					}
 				}
-				else {
-					
-				}
-				
 			}
 		});
 		
@@ -356,6 +352,8 @@ public class ProductDetailActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(String specification) {
+			buyNowButton.setEnabled(true);
+			
 			productSpecificationTextView.setText(specification);
 		}
 	}
@@ -405,6 +403,8 @@ public class ProductDetailActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(Void specification) {
+			buyNowButton.setEnabled(true);
+			
 			if (attributes != null && !attributes.isEmpty()) {
 				
 				attributeListView.setAdapter(new ProductAttributeAdapter(
@@ -414,8 +414,6 @@ public class ProductDetailActivity extends Activity {
 								LayoutParams.MATCH_PARENT, Utils.dpToPx(
 										getApplicationContext(),
 										31 * attributes.size())));
-				
-				buyNowButton.setEnabled(true);
 				
 				buyNowButton.setOnClickListener(new OnClickListener() {
 					

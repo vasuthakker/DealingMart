@@ -62,6 +62,7 @@ public class CategoryViewFragment extends Fragment {
 		
 		categoryBannerImageview = (ImageView) getActivity().findViewById(
 				R.id.category_banner_imageview);
+		
 		categoryListView = (ListView) getActivity().findViewById(
 				R.id.category_productlist_listview);
 		

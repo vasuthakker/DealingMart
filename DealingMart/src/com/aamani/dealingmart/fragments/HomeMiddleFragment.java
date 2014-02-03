@@ -20,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.activities.HomeActivity;
@@ -35,52 +36,53 @@ import com.aamani.dealingmart.interfaces.OnCategoryItemSelected;
  * 
  */
 public class HomeMiddleFragment extends Fragment {
-
+	
 	private ImageView leftNavigationImageview;
-
+	
 	private static final int LEFT_PAGE = 0;
 	private static final int MIDDLE_PAGE = 1;
-
+	
 	private static final String TAG = "HomeMiddleFragment";
 	private static FragmentManager fragmentManager;
-
+	
 	private static RelativeLayout cartLayout;
 	private static TextView cartNumberTextView;
-
+	
 	private RelativeLayout shoppingCartViewLayout;
-
+	
 	private AutoCompleteTextView searchTextView;
-
+	
 	// private static boolean firstTime = true;
-
+	
 	private OnCategoryItemSelected onCategorySelected;
-
+	
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		try {
 			onCategorySelected = (OnCategoryItemSelected) activity;
-		} catch (ClassCastException e) {
+		}
+		catch (ClassCastException e) {
 			Log.e(TAG, "ClassCastException", e);
 		}
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		
 		return inflater
 				.inflate(R.layout.fragment_home_middle, container, false);
-
+		
 	}
-
+	
 	@Override
 	public void onStart() {
 		super.onStart();
-
+		
 		leftNavigationImageview = (ImageView) getActivity().findViewById(
 				R.id.home_navigation_imageview);
-
+		
 		cartLayout = (RelativeLayout) getActivity().findViewById(
 				R.id.cart_layout);
 		cartNumberTextView = (TextView) getActivity().findViewById(
@@ -89,58 +91,66 @@ public class HomeMiddleFragment extends Fragment {
 				R.id.shopping_cart_view_layout);
 		searchTextView = (AutoCompleteTextView) getActivity().findViewById(
 				R.id.search_autocomplete_textview);
-
+		
 		leftNavigationImageview.setOnClickListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
 				int currentItem = HomeActivity.ChangePage();
 				if (currentItem == MIDDLE_PAGE) {
 					leftNavigationImageview.setRotation(180f);
-				} else {
+				}
+				else {
 					leftNavigationImageview.setRotation(0f);
 				}
 			}
 		});
-
+		
 		fragmentManager = getChildFragmentManager();
-
+		
 		Fragment fragment = fragmentManager
 				.findFragmentById(R.id.category_fragment_base_layout);
 		if (fragment == null) {
 			changeChildFragment(new HomeDetailFragment(), null, null, null);
 		}
-
+		
 		shoppingCartViewLayout.setOnClickListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
 				
-				Intent intent = new Intent(getActivity(),
-						ShoppingCartActivity.class);
-				startActivity(intent);
+				if (CartHelper.fetchProdcutsCount(getActivity()) > 0) {
+					Intent intent = new Intent(getActivity(),
+							ShoppingCartActivity.class);
+					startActivity(intent);
+				}
+				else {
+					Toast.makeText(getActivity(),
+							getString(R.string.no_product_in_the_cart),
+							Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
-
+		
 		int cartProductNumber = CartHelper.fetchProdcutsCount(getActivity());
 		updateProductNumber(cartProductNumber);
-
+		
 		searchTextView.addTextChangedListener(new TextWatcher() {
-
+			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void afterTextChanged(Editable s) {
 				if (s.toString().length() > 2) {
@@ -150,19 +160,19 @@ public class HomeMiddleFragment extends Fragment {
 				}
 			}
 		});
-
+		
 	}
-
+	
 	private class SearchProduct implements Runnable {
-
+		
 		String searchString;
 		Editable searchEditable;
-
+		
 		public SearchProduct(String searchString, Editable searchEditable) {
 			this.searchString = searchString;
 			this.searchEditable = searchEditable;
 		}
-
+		
 		@Override
 		public void run() {
 			if (searchEditable.toString().equalsIgnoreCase(searchString)) {
@@ -174,9 +184,9 @@ public class HomeMiddleFragment extends Fragment {
 				onCategorySelected.onCategorySelected(null, null, searchString);
 			}
 		}
-
+		
 	}
-
+	
 	public static void changeChildFragment(Fragment fragment, String category,
 			String subCategory, String productName) {
 		Bundle bundle = null;
@@ -194,14 +204,15 @@ public class HomeMiddleFragment extends Fragment {
 		ft.addToBackStack(null);
 		ft.commit();
 	}
-
+	
 	public static void updateProductNumber(int number) {
 		if (number > 0) {
 			cartLayout.setVisibility(View.VISIBLE);
 			cartNumberTextView.setText(String.valueOf(number));
-		} else {
+		}
+		else {
 			cartLayout.setVisibility(View.GONE);
 		}
 	}
-
+	
 }

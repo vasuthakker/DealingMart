@@ -102,7 +102,9 @@ public class DealingMartConstatns {
 	public static final String ONLY_EMAIL = "ONLY_EMAIL";
 	
 	public static final String ONLY_PHONE_NUMBER = "ONLY_PHONE_NUMBER";
-
+	
 	public static final String APP_SHARED = "APP_SHARED";
+	
+	public static final String OFFER_DIALOG = "OFFER_DIALOG";
 	
 }

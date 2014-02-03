@@ -61,6 +61,7 @@ public class CartHelper {
 	 */
 	public static void updatePorductToCart(Context context,
 			ProductEntity product) {
+		
 		DataBaseHelper dbHelper = new DataBaseHelper(context);
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		try {
@@ -165,6 +166,7 @@ public class CartHelper {
 		}
 		return products;
 	}
+	
 	
 	/**
 	 * Fetch products

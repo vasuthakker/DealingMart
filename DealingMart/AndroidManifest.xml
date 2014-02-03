@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aamani.dealingmart"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="18" />
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,10 +16,18 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <permission
         android:name="com.aamani.dealingmart.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <uses-permission android:name="com.aamani.dealingmart.permission.C2D_MESSAGE" />
 
@@ -90,10 +99,20 @@
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="76f84191b2211b9ae292e972235130da8bc5812c" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCNW96DgLnRuQKy19clrjcjRR-XvBTaW80" />
 
         <activity
             android:name="com.aamani.dealingmart.activities.DisplayContactActivity"
             android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.aamani.dealingmart.activities.ContactUsActivity"
+            android:label="@string/title_activity_contact_us" >
         </activity>
     </application>
 

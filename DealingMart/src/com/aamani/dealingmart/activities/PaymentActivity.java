@@ -6,6 +6,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.aamani.dealingmart.R;
 import com.aamani.dealingmart.common.DataBaseHelper;
@@ -25,11 +26,14 @@ public class PaymentActivity extends Activity {
 	private WebView webView;
 	
 	private ProgressBar webViewProgressBar;
+	boolean isEbsVisited = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_payment);
+		
+		isEbsVisited = false;
 		
 		webView = (WebView) findViewById(R.id.payment_webview);
 		
@@ -41,12 +45,18 @@ public class PaymentActivity extends Activity {
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
+				
 				webViewProgressBar.setVisibility(View.VISIBLE);
-				if (url.contains("index")) {
+				
+				if (url.contains("ebs")) {
+					isEbsVisited = true;
+				}
+				else if (url.contains("index")) {
 					finish();
 					DataBaseHelper.truncateOrderTable(getApplicationContext());
 				}
+				
+				view.loadUrl(url);
 				return true;
 			}
 			
@@ -69,13 +79,17 @@ public class PaymentActivity extends Activity {
 	
 	@Override
 	public void onBackPressed() {
-		if (webView.canGoBack()) {
-			webView.goBack();
-		}
-		else {
-			super.onBackPressed();
-			finish();
-		}
+		// if (webView.canGoBack()) {
+		//
+		// finish();
+		//
+		// }
+		// else {
+		// super.onBackPressed();
+		// finish();
+		// }
+		super.onBackPressed();
+		finish();
 	}
 	
 }

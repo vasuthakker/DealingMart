@@ -208,8 +208,8 @@
             android:id="@+id/shipping_activity_loading_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_centerInParent="true"
+            android:orientation="vertical"
             android:visibility="gone" >
 
             <ProgressBar
@@ -218,6 +218,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/shipping_loading_progressbar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>
